@@ -1,0 +1,4 @@
+storeFile=keys.p12
+storePassword=password
+keyAlias=ReleaseKey
+keyPassword=password

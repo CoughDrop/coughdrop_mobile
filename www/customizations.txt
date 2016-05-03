@@ -56,6 +56,13 @@ in ios/CoughDrop/Classes/MainViewController.m:
 }
 
 
+android
+AndroidManifest.xml
+    <uses-feature android:name="android.hardware.microphone" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+
+
 UPGRADING
 ios
 get ZipFileDownloader re-added

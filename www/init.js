@@ -1,4 +1,11 @@
 (function() {
+  window.time_log = function (str) {
+    var stamp = Math.round(new Date().getTime() / 1000 % 100 * 100) / 100;
+    console.log(str + "  :" + stamp);
+  };
+  
+  time_log("init started");
+
   // hacky fix for fixed position keyboard bug in ios
   window.scrollTo(document.body.scrollLeft, document.body.scrollTop);
   
@@ -30,7 +37,7 @@
     }
   }
   function checkState() {
-    console.log("COUGHDROP: checking state...");
+    time_log("COUGHDROP: checking state...");
     window.load_state = window.load_state || {};
     if(!window.FileReader) {
       hideSplash();

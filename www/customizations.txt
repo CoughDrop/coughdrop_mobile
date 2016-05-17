@@ -77,6 +77,7 @@ in XCode, Project -> Archive, Upload to App Store
 
 android
 cordova plugin add cordova-plugin-crosswalk-webview
-cordova build android --release -- #--gradleArg=-PcdvBuildMultipleApks=true
+cordova build android --release -- --gradleArg=-PcdvMinSdkVersion=14 
+# --gradleArg=-PcdvBuildMultipleApks=false
 cordova plugin remove cordova-plugin-crosswalk-webview
 cordova build android --release -- --gradleArg=-PcdvMinSdkVersion=19 --gradleArg=-PcdvBuildMultipleApks=false

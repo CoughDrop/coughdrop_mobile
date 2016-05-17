@@ -82,7 +82,7 @@
     <plugin name="cordova-plugin-inappbrowser" spec="~1.1.0" />
     <plugin name="cordova-plugin-splashscreen" spec="~3.0.0" />
     <plugin name="cordova-plugin-chrome-apps-power" spec="~1.0.4" />
-    <plugin name="de.codevise.cordova.volume" spec="https://github.com/g-w/cordova-volume.git" />
+    <plugin name="de.codevise.cordova.volume" spec="https://github.com/whitmer/cordova-volume.git" />
     <plugin name="cordova-plugin-battery-status" spec="~1.1.1" />
     <plugin name="cordova-plugin-media-capture" spec="~1.2.0" />
     <plugin name="cordova-plugin-keyboard" spec="~1.1.3" />

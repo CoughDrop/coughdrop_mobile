@@ -6,3 +6,4 @@ platforms
 plugins
 android-release-keys.properties
 www/track_key.js
+config_tmp.xml

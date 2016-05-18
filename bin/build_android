@@ -1,0 +1,13 @@
+#!/bin/sh
+cordova prepare
+# use crosswalk for lower-version compatibility
+# change config.xml to level=14
+xsltproc --stringparam version 14 -o config.xml bin/minsdk_version_change.xsl config.xml 
+cordova plugin add cordova-plugin-crosswalk-webview
+cordova build android --release -- --gradleArg=-PcdvMinSdkVersion=14 
+# --gradleArg=-PcdvBuildMultipleApks=false
+# remove crosswalk for higher-version compatibility with smaller footprint
+# change config.xml to level=19
+xsltproc --stringparam version 19 -o config.xml bin/minsdk_version_change.xsl config.xml
+cordova plugin remove cordova-plugin-crosswalk-webview
+cordova build android --release -- --gradleArg=-PcdvMinSdkVersion=19 --gradleArg=-PcdvBuildMultipleApks=false

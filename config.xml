@@ -1,96 +1,94 @@
-<?xml version="1.0"?>
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" id="com.mycoughdrop.coughdrop" version="2016.09.02">
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.mycoughdrop.coughdrop" version="2016.09.28" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>CoughDrop</name>
     <description>A simple, modern communication app for struggling communicators.</description>
     <author>CoughDrop, Inc.</author>
-    <preference name="KeyboardShrinksView" value="false"/>
-    <preference name="StatusBarOverlaysWebView" value="false"/>
-    <preference name="StatusBarBackgroundColor" value="#000000"/>
-    <preference name="iosPersistentFileLocation" value="Library"/>
-    <preference name="AndroidPersistentFileLocation" value="Internal"/>
-    <preference name="LoadUrlTimeoutValue" value="120000"/>
+    <preference name="KeyboardShrinksView" value="false" />
+    <preference name="StatusBarOverlaysWebView" value="false" />
+    <preference name="StatusBarBackgroundColor" value="#000000" />
+    <preference name="iosPersistentFileLocation" value="Library" />
+    <preference name="AndroidPersistentFileLocation" value="Internal" />
+    <preference name="LoadUrlTimeoutValue" value="120000" />
     <platform name="ios">
-        <preference name="AutoHideSplashScreen" value="false"/>
-        <preference name="BackupWebStorage" value="none"/>
-        <preference name="KeyboardDisplayRequiresUserAction" value="false"/>
-        <preference name="orientation" value="all"/>
-        <preference name="MediaPlaybackRequiresUserAction" value="false"/>
-        <icon src="www/assets/icons/icon180.ios.png"/>
-        <icon src="www/assets/icons/icon29.ios.png" width="29"/>
-        <icon src="www/assets/icons/icon40.ios.png" width="40"/>
-        <icon src="www/assets/icons/icon50.ios.png" width="50"/>
-        <icon src="www/assets/icons/icon57.ios.png" width="57"/>
-        <icon src="www/assets/icons/icon58.ios.png" width="58"/>
-        <icon src="www/assets/icons/icon60.ios.png" width="60"/>
-        <icon src="www/assets/icons/icon72.ios.png" width="72"/>
-        <icon src="www/assets/icons/icon76.ios.png" width="76"/>
-        <icon src="www/assets/icons/icon80.ios.png" width="80"/>
-        <icon src="www/assets/icons/icon100.ios.png" width="100"/>
-        <icon src="www/assets/icons/icon120.ios.png" width="120"/>
-        <icon src="www/assets/icons/icon144.ios.png" width="144"/>
-        <icon src="www/assets/icons/icon152.ios.png" width="152"/>
-        <icon src="www/assets/icons/icon180.ios.png" width="180"/>
-        <splash height="480" src="www/assets/splash/Default~iphone.png" width="320"/>
-        <splash height="960" src="www/assets/splash/Default@2x~iphone.png" width="640"/>
-        <splash height="1024" src="www/assets/splash/Default-Portrait~ipad.png" width="768"/>
-        <splash height="2048" src="www/assets/splash/Default-Portrait@2x~ipad.png" width="1536"/>
-        <splash height="768" src="www/assets/splash/Default-Landscape~ipad.png" width="1024"/>
-        <splash height="1536" src="www/assets/splash/Default-Landscape@2x~ipad.png" width="2048"/>
-        <splash height="1136" src="www/assets/splash/Default-568h@2x~iphone.png" width="640"/>
-        <splash height="1334" src="www/assets/splash/Default-667h.png" width="750"/>
-        <splash height="2208" src="www/assets/splash/Default-736h.png" width="1242"/>
-        <splash height="1242" src="www/assets/splash/Default-Landscape-736h.png" width="2208"/>
+        <preference name="AutoHideSplashScreen" value="false" />
+        <preference name="BackupWebStorage" value="none" />
+        <preference name="KeyboardDisplayRequiresUserAction" value="false" />
+        <preference name="orientation" value="all" />
+        <preference name="MediaPlaybackRequiresUserAction" value="false" />
+        <icon src="www/assets/icons/icon180.ios.png" />
+        <icon src="www/assets/icons/icon29.ios.png" width="29" />
+        <icon src="www/assets/icons/icon40.ios.png" width="40" />
+        <icon src="www/assets/icons/icon50.ios.png" width="50" />
+        <icon src="www/assets/icons/icon57.ios.png" width="57" />
+        <icon src="www/assets/icons/icon58.ios.png" width="58" />
+        <icon src="www/assets/icons/icon60.ios.png" width="60" />
+        <icon src="www/assets/icons/icon72.ios.png" width="72" />
+        <icon src="www/assets/icons/icon76.ios.png" width="76" />
+        <icon src="www/assets/icons/icon80.ios.png" width="80" />
+        <icon src="www/assets/icons/icon100.ios.png" width="100" />
+        <icon src="www/assets/icons/icon120.ios.png" width="120" />
+        <icon src="www/assets/icons/icon144.ios.png" width="144" />
+        <icon src="www/assets/icons/icon152.ios.png" width="152" />
+        <icon src="www/assets/icons/icon180.ios.png" width="180" />
+        <splash height="480" src="www/assets/splash/Default~iphone.png" width="320" />
+        <splash height="960" src="www/assets/splash/Default@2x~iphone.png" width="640" />
+        <splash height="1024" src="www/assets/splash/Default-Portrait~ipad.png" width="768" />
+        <splash height="2048" src="www/assets/splash/Default-Portrait@2x~ipad.png" width="1536" />
+        <splash height="768" src="www/assets/splash/Default-Landscape~ipad.png" width="1024" />
+        <splash height="1536" src="www/assets/splash/Default-Landscape@2x~ipad.png" width="2048" />
+        <splash height="1136" src="www/assets/splash/Default-568h@2x~iphone.png" width="640" />
+        <splash height="1334" src="www/assets/splash/Default-667h.png" width="750" />
+        <splash height="2208" src="www/assets/splash/Default-736h.png" width="1242" />
+        <splash height="1242" src="www/assets/splash/Default-Landscape-736h.png" width="2208" />
     </platform>
     <platform name="android">
-        <preference name="SplashScreen" value="screen"/>
-        <preference name="AutoHideSplashScreen" value="false"/>
-        <preference name="SplashScreenDelay" value="50000"/>
-        <preference name="DefaultVolumeStream" value="media"/>
-        <icon src="www/assets/icons/icon144.png"/>
-        <icon src="www/assets/icons/icon16.png" width="16"/>
-        <icon src="www/assets/icons/icon36.png" width="36"/>
-        <icon src="www/assets/icons/icon48.png" width="48"/>
-        <icon src="www/assets/icons/icon57.png" width="57"/>
-        <icon src="www/assets/icons/icon72.png" width="72"/>
-        <icon src="www/assets/icons/icon96.png" width="96"/>
-        <icon src="www/assets/icons/icon114.png" width="114"/>
-        <icon src="www/assets/icons/icon128.png" width="128"/>
-        <icon src="www/assets/icons/icon144.png" width="144"/>
-        <splash density="land-hdpi" src="www/assets/splash/drawable-land-hdpi/screen.9.png"/>
-        <splash density="land-ldpi" src="www/assets/splash/drawable-land-ldpi/screen.9.png"/>
-        <splash density="land-mdpi" src="www/assets/splash/drawable-land-mdpi/screen.9.png"/>
-        <splash density="land-xhdpi" src="www/assets/splash/drawable-land-xhdpi/screen.9.png"/>
-        <splash density="port-hdpi" src="www/assets/splash/drawable-port-hdpi/screen.9.png"/>
-        <splash density="port-ldpi" src="www/assets/splash/drawable-port-ldpi/screen.9.png"/>
-        <splash density="port-mdpi" src="www/assets/splash/drawable-port-mdpi/screen.9.png"/>
-        <splash density="port-xhdpi" src="www/assets/splash/drawable-port-xhdpi/screen.9.png"/>
+        <preference name="android-minSdkVersion" value="19" />
+        <preference name="minSdkVersion" value="19" />
+        <preference name="SplashScreen" value="screen" />
+        <preference name="AutoHideSplashScreen" value="false" />
+        <preference name="SplashScreenDelay" value="50000" />
+        <preference name="DefaultVolumeStream" value="media" />
+        <icon src="www/assets/icons/icon144.png" />
+        <icon src="www/assets/icons/icon16.png" width="16" />
+        <icon src="www/assets/icons/icon36.png" width="36" />
+        <icon src="www/assets/icons/icon48.png" width="48" />
+        <icon src="www/assets/icons/icon57.png" width="57" />
+        <icon src="www/assets/icons/icon72.png" width="72" />
+        <icon src="www/assets/icons/icon96.png" width="96" />
+        <icon src="www/assets/icons/icon114.png" width="114" />
+        <icon src="www/assets/icons/icon128.png" width="128" />
+        <icon src="www/assets/icons/icon144.png" width="144" />
+        <splash density="land-hdpi" src="www/assets/splash/drawable-land-hdpi/screen.9.png" />
+        <splash density="land-ldpi" src="www/assets/splash/drawable-land-ldpi/screen.9.png" />
+        <splash density="land-mdpi" src="www/assets/splash/drawable-land-mdpi/screen.9.png" />
+        <splash density="land-xhdpi" src="www/assets/splash/drawable-land-xhdpi/screen.9.png" />
+        <splash density="port-hdpi" src="www/assets/splash/drawable-port-hdpi/screen.9.png" />
+        <splash density="port-ldpi" src="www/assets/splash/drawable-port-ldpi/screen.9.png" />
+        <splash density="port-mdpi" src="www/assets/splash/drawable-port-mdpi/screen.9.png" />
+        <splash density="port-xhdpi" src="www/assets/splash/drawable-port-xhdpi/screen.9.png" />
     </platform>
-    <content src="index.html"/>
-    <access origin="*"/>
-    <allow-navigation href="https://*youtube.com/*"/>
-    <engine name="android" spec="~5.1.1"/>
-    <engine name="ios" spec="~4.1.1"/>
-    <plugin name="cordova-plugin-whitelist" spec="1"/>
-    <plugin name="cordova-plugin-blob-constructor-polyfill" spec="~1.0.2"/>
-    <plugin name="cordova-plugin-chrome-apps-audiocapture" spec="~1.0.5"/>
-    <plugin name="cordova-plugin-chrome-apps-videocapture" spec="~1.0.4"/>
-    <plugin name="cordova-plugin-file" spec="~3.0.0"/>
-    <plugin name="cordova-plugin-xhr-blob-polyfill" spec="~1.0.3"/>
-    <plugin name="org.apache.cordova.speech.speechsynthesis" spec="~0.1.0"/>
-    <plugin name="cordova-plugin-statusbar" spec="~2.0.0"/>
-    <plugin name="cordova-plugin-network-information" spec="~1.1.0"/>
-    <plugin name="cordova-plugin-inappbrowser" spec="~1.1.0"/>
-    <plugin name="cordova-plugin-splashscreen" spec="~3.0.0"/>
-    <plugin name="cordova-plugin-chrome-apps-power" spec="~1.0.4"/>
-    <plugin name="de.codevise.cordova.volume" spec="https://github.com/whitmer/cordova-volume.git"/>
-    <plugin name="cordova-plugin-battery-status" spec="~1.1.1"/>
-    <plugin name="cordova-plugin-media-capture" spec="~1.2.0"/>
-    <plugin name="cordova-plugin-keyboard" spec="~1.1.3"/>
-    <plugin name="com.mycoughdrop.coughdrop.extra-tts"/>
-    <plugin name="com.mycoughdrop.coughdrop.misc"/>
-    <preference name="xwalkVersion" value="20+"/>
-    <preference name="xwalkCommandLine" value="--disable-pull-to-refresh-effect"/>
-    <preference name="xwalkMode" value="embedded"/>
-    <preference name="xwalkMultipleApk" value="true"/>
-    <preference name="android-minSdkVersion" value="16"/>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-navigation href="https://*youtube.com/*" />
+    <allow-navigation href="cdvfile://*/*" />
+    <engine name="android" spec="~5.1.1" />
+    <engine name="ios" spec="~4.1.1" />
+    <plugin name="cordova-plugin-whitelist" spec="1" />
+    <plugin name="cordova-plugin-blob-constructor-polyfill" spec="~1.0.2" />
+    <plugin name="cordova-plugin-chrome-apps-audiocapture" spec="~1.0.5" />
+    <plugin name="cordova-plugin-chrome-apps-videocapture" spec="~1.0.4" />
+    <plugin name="cordova-plugin-file" spec="~3.0.0" />
+    <plugin name="cordova-plugin-xhr-blob-polyfill" spec="~1.0.3" />
+    <plugin name="org.apache.cordova.speech.speechsynthesis" spec="~0.1.0" />
+    <plugin name="cordova-plugin-statusbar" spec="~2.0.0" />
+    <plugin name="cordova-plugin-network-information" spec="~1.1.0" />
+    <plugin name="cordova-plugin-inappbrowser" spec="~1.1.0" />
+    <plugin name="cordova-plugin-splashscreen" spec="~3.0.0" />
+    <plugin name="cordova-plugin-chrome-apps-power" spec="~1.0.4" />
+    <plugin name="de.codevise.cordova.volume" spec="https://github.com/whitmer/cordova-volume.git" />
+    <plugin name="cordova-plugin-battery-status" spec="~1.1.1" />
+    <plugin name="cordova-plugin-media-capture" spec="~1.2.0" />
+    <plugin name="cordova-plugin-keyboard" spec="~1.1.3" />
+    <plugin name="com.mycoughdrop.coughdrop.extra-tts" />
+    <plugin name="com.mycoughdrop.coughdrop.misc" />
 </widget>

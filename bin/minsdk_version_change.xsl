@@ -15,4 +15,9 @@
       <xsl:value-of select="$version"/>
     </xsl:attribute>
   </xsl:template>
+  <xsl:template match="widget:preference[@name='minSdkVersion']/@value">
+    <xsl:attribute name="value">
+      <xsl:value-of select="$version"/>
+    </xsl:attribute>
+  </xsl:template>
 </xsl:stylesheet>

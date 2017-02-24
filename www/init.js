@@ -48,12 +48,12 @@
         loadingSay("downloading resources, this may take a little while...");
         setTimeout(checkState, 5000);
       } else if(!window.load_state.js_really_still_waiting) {
-        window.trackJs && window.trackJs.track("slow download");
+        window._trackJs && window._trackJs.track("slow download");
         window.load_state.js_really_still_waiting = true;
         loadingSay("still downloading. It doesn't usually take this long, there may be a slow connection...");
         setTimeout(checkState, 60000);
       } else {
-        window.trackJs && window.trackJs.track("download failed");
+        window._trackJs && window._trackJs.track("download failed");
         if(window.capabilities && window.capabilities.db_error) {
           hideSplash();
           loadingSay("there might be a problem with your installation. You can try deleting and re-installing the app, keep waiting, or <a href='https://coughdrop.zendesk.com' target='_blank'>contact support</a>");
@@ -68,13 +68,13 @@
         loadingSay("initializing...");
         setTimeout(checkState, 5000);
       } else if(!window.load_state.js_really_still_loading) {
-        window.trackJs && window.trackJs.track("slow init");
+        window._trackJs && window._trackJs.track("slow init");
         window.load_state.js_really_still_loading = true;
         hideSplash();
         loadingSay("initialization is taking longer than expected...");
         setTimeout(checkState, 30000);
       } else {
-        window.trackJs && window.trackJs.track("init failed");
+        window._trackJs && window._trackJs.track("init failed");
         if(window.capabilities && window.capabilities.db_error) {
           hideSplash();
           loadingSay("there might be a problem with your installation. You can try deleting and re-installing the app, keep waiting, or <a href='https://coughdrop.zendesk.com' target='_blank'>contact support</a>");
@@ -89,10 +89,10 @@
   setTimeout(function() {
     if(!window.splash_hidden) {
       console.error("splash screen wasn't hidden");
-      window.trackJs && window.trackJs.track("splash screen wasn't hidden");
+      window._trackJs && window._trackJs.track("splash screen wasn't hidden");
     }
   }, 30000);
-  window.app_version = "2016.12.01";
+  window.app_version = "2017.02.24b";
   window.capabilities = {installed_app: true, api_host: "https://www.mycoughdrop.com", wait_for_deviceready: true};
   navigator.standalone = navigator.standalone || (navigator.userAgent.match(/android/i) && navigator.userAgent.match(/chrome/i) && (screen.height-document.documentElement.clientHeight<40));
   var elem = document.getElementById('enabled_frontend_features');

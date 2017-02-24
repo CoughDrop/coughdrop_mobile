@@ -2,7 +2,12 @@
 
 This is the skeleton for the mobile app version of CoughDrop. It is dependent on compiled
 code provided by the main app in order to run. Most of the code is boilerplate 
-Cordova and code brought in from the main CoughDrop app.
+Cordova, plugins, and code brought in from the main CoughDrop app. I haven't documented
+setting up a clean dev environment, so good luck :-).
+
+This library makes it possible to create CoughDrop executables for installation on 
+iOS, Android and Kindle. It would probably work for other targets as well (other than
+the plugins) but I haven't tested it anywhere else.
 
 ## Technical Notes
 
@@ -27,6 +32,7 @@ Additional notes:
   a keys.p12 file and put your password in `android-release-keys.properties` first.
 - Managing splash screen images and app icons was a headache, I don't have notes on how
   to do it because it just works right now and I don't want to touch it.
+- There are some additional notes in `www/customizations.txt`
 
 ## License
 

@@ -34,14 +34,14 @@
             "cordova-sqlite-storage": {},
             "de.codevise.cordova.volume": {},
             "nl.x-services.plugins.backgroundaudio": {},
-            "org.apache.cordova.speech.speechsynthesis": {}
+            "phonegap-plugin-speech-synthesis": {}
         }
     },
     "dependencies": {
-        "cordova-android": "~5.1.1",
-        "cordova-ios": "~4.1.1",
         "com.mycoughdrop.coughdrop.extra-tts": "https://github.com/coughdrop/extra-tts.git",
         "com.mycoughdrop.coughdrop.misc": "https://github.com/CoughDrop/coughdrop_cordova_misc.git",
+        "cordova-android": "~5.1.1",
+        "cordova-ios": "~4.1.1",
         "cordova-plugin-battery-status": "~1.1.1",
         "cordova-plugin-blob-constructor-polyfill": "~1.0.2",
         "cordova-plugin-brightness": "~0.1.5",
@@ -63,7 +63,7 @@
         "cordova-plugin-xhr-blob-polyfill": "~1.0.3",
         "cordova-sqlite-storage": "~1.4.1",
         "de.codevise.cordova.volume": "https://github.com/whitmer/cordova-volume.git",
-        "nl.x-services.plugins.backgroundaudio": "https://github.com/EddyVerbruggen/cordova-plugin-backgroundaudio",
-        "org.apache.cordova.speech.speechsynthesis": "~0.1.0"
+        "nl.x-services.plugins.backgroundaudio": "https://github.com/whitmer/cordova-plugin-backgroundaudio.git",
+        "phonegap-plugin-speech-synthesis": "git+https://github.com/macdonst/SpeechSynthesisPlugin.git"
     }
 }

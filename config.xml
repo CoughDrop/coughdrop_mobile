@@ -40,13 +40,19 @@
         <splash height="1334" src="www/assets/splash/Default-667h.png" width="750" />
         <splash height="2208" src="www/assets/splash/Default-736h.png" width="1242" />
         <splash height="1242" src="www/assets/splash/Default-Landscape-736h.png" width="2208" />
+        <config-file parent="NSMicrophoneUsageDescription" platform="ios" target="*-Info.plist">
+            <string>CoughDrop would like access to your microphone.</string>
+        </config-file>
+        <config-file parent="NSCameraUsageDescription" platform="ios" target="*-Info.plist">
+            <string>CoughDrop would like access to your camera.</string>
+        </config-file>
         <config-file parent="NSPhotoLibraryUsageDescription" platform="ios" target="*-Info.plist">
             <string>CoughDrop would like access to your camera and photos.</string>
         </config-file>
     </platform>
     <platform name="android">
-        <preference name="android-minSdkVersion" value="19" />
-        <preference name="minSdkVersion" value="19" />
+        <preference name="android-minSdkVersion" value="16" />
+        <preference name="minSdkVersion" value="16" />
         <preference name="SplashScreen" value="screen" />
         <preference name="AutoHideSplashScreen" value="false" />
         <preference name="SplashScreenDelay" value="50000" />
@@ -101,6 +107,6 @@
     <plugin name="cordova-plugin-xhr-blob-polyfill" spec="~1.0.3" />
     <plugin name="cordova-sqlite-storage" spec="~1.4.1" />
     <plugin name="de.codevise.cordova.volume" spec="https://github.com/whitmer/cordova-volume.git" />
-    <plugin name="nl.x-services.plugins.backgroundaudio" spec="https://github.com/EddyVerbruggen/cordova-plugin-backgroundaudio" />
-    <plugin name="org.apache.cordova.speech.speechsynthesis" spec="~0.1.0" />
+    <plugin name="nl.x-services.plugins.backgroundaudio" spec="https://github.com/whitmer/cordova-plugin-backgroundaudio.git" />
+    <plugin name="phonegap-plugin-speech-synthesis" spec="git+https://github.com/macdonst/SpeechSynthesisPlugin.git" />
 </widget>

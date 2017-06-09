@@ -10,3 +10,4 @@ config_tmp.xml
 www/app.js
 www/css/app.css
 node_modules
+builds/*

@@ -53,6 +53,8 @@
     <platform name="android">
         <preference name="android-minSdkVersion" value="19" />
         <preference name="minSdkVersion" value="19" />
+        <preference name="android-targetSdkVersion" value="22" />
+        <preference name="targetSdkVersion" value="22" />
         <preference name="SplashScreen" value="screen" />
         <preference name="AutoHideSplashScreen" value="false" />
         <preference name="SplashScreenDelay" value="50000" />

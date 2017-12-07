@@ -16,21 +16,24 @@
         <preference name="KeyboardDisplayRequiresUserAction" value="false" />
         <preference name="orientation" value="all" />
         <preference name="MediaPlaybackRequiresUserAction" value="false" />
-        <icon src="www/assets/icons/icon180.ios.png" />
-        <icon src="www/assets/icons/icon29.ios.png" width="29" />
-        <icon src="www/assets/icons/icon40.ios.png" width="40" />
-        <icon src="www/assets/icons/icon50.ios.png" width="50" />
-        <icon src="www/assets/icons/icon57.ios.png" width="57" />
-        <icon src="www/assets/icons/icon58.ios.png" width="58" />
-        <icon src="www/assets/icons/icon60.ios.png" width="60" />
-        <icon src="www/assets/icons/icon72.ios.png" width="72" />
-        <icon src="www/assets/icons/icon76.ios.png" width="76" />
-        <icon src="www/assets/icons/icon80.ios.png" width="80" />
-        <icon src="www/assets/icons/icon100.ios.png" width="100" />
-        <icon src="www/assets/icons/icon120.ios.png" width="120" />
-        <icon src="www/assets/icons/icon144.ios.png" width="144" />
-        <icon src="www/assets/icons/icon152.ios.png" width="152" />
-        <icon src="www/assets/icons/icon180.ios.png" width="180" />
+        <icon height="180" src="www/assets/icons/icon180.ios.png" width="180" />
+        <icon height="60" src="www/assets/icons/icon60.ios.png" width="60" />
+        <icon height="120" src="www/assets/icons/icon120.ios.png" width="120" />
+        <icon height="76" src="www/assets/icons/icon76.ios.png" width="76" />
+        <icon height="152" src="www/assets/icons/icon152.ios.png" width="152" />
+        <icon height="40" src="www/assets/icons/icon40.ios.png" width="40" />
+        <icon height="80" src="www/assets/icons/icon80.ios.png" width="80" />
+        <icon height="57" src="www/assets/icons/icon57.ios.png" width="57" />
+        <icon height="114" src="www/assets/icons/icon114.ios.png" width="114" />
+        <icon height="72" src="www/assets/icons/icon72.ios.png" width="72" />
+        <icon height="144" src="www/assets/icons/icon144.ios.png" width="144" />
+        <icon height="29" src="www/assets/icons/icon29.ios.png" width="29" />
+        <icon height="58" src="www/assets/icons/icon58.ios.png" width="58" />
+        <icon height="50" src="www/assets/icons/icon50.ios.png" width="50" />
+        <icon height="100" src="www/assets/icons/icon100.ios.png" width="100" />
+        <icon height="87" src="www/assets/icons/icon87.ios.png" width="87" />
+        <icon height="167" src="www/assets/icons/icon167.ios.png" width="167" />
+        <icon height="1024" src="www/assets/icons/icon1024.ios.png" width="1024" />
         <splash height="480" src="www/assets/splash/Default~iphone.png" width="320" />
         <splash height="960" src="www/assets/splash/Default@2x~iphone.png" width="640" />
         <splash height="1024" src="www/assets/splash/Default-Portrait~ipad.png" width="768" />
@@ -70,6 +73,7 @@
         <icon src="www/assets/icons/icon114.png" width="114" />
         <icon src="www/assets/icons/icon128.png" width="128" />
         <icon src="www/assets/icons/icon144.png" width="144" />
+        <icon src="www/assets/icons/icon1024.png" width="1024" />
         <splash density="land-hdpi" src="www/assets/splash/drawable-land-hdpi/screen.9.png" />
         <splash density="land-ldpi" src="www/assets/splash/drawable-land-ldpi/screen.9.png" />
         <splash density="land-mdpi" src="www/assets/splash/drawable-land-mdpi/screen.9.png" />

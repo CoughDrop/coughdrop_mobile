@@ -29,7 +29,6 @@
             "cordova-sqlite-storage": {},
             "de.codevise.cordova.volume": {},
             "nl.x-services.plugins.backgroundaudio": {},
-            "phonegap-plugin-speech-synthesis": {},
             "cordova-plugin-file": {},
             "cordova-plugin-media-capture": {
                 "CAMERA_USAGE_DESCRIPTION": "CoughDrop would like access to your camera.",
@@ -40,7 +39,8 @@
             "cordova-plugin-media": {
                 "MICROPHONE_USAGE_DESCRIPTION": " "
             },
-            "cordova-plugin-tts": {}
+            "cordova-plugin-tts": {},
+            "phonegap-plugin-speech-synthesis": {}
         }
     },
     "dependencies": {
@@ -72,6 +72,6 @@
         "cordova-sqlite-storage": "~1.4.1",
         "de.codevise.cordova.volume": "https://github.com/whitmer/cordova-volume.git",
         "nl.x-services.plugins.backgroundaudio": "https://github.com/whitmer/cordova-plugin-backgroundaudio.git",
-        "phonegap-plugin-speech-synthesis": "git+https://github.com/macdonst/SpeechSynthesisPlugin.git"
+        "phonegap-plugin-speech-synthesis": "git+https://github.com/mike-nelson/SpeechSynthesisPlugin.git"
     }
 }

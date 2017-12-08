@@ -122,4 +122,6 @@
     <plugin name="de.codevise.cordova.volume" spec="https://github.com/whitmer/cordova-volume.git" />
     <plugin name="nl.x-services.plugins.backgroundaudio" spec="https://github.com/whitmer/cordova-plugin-backgroundaudio.git" />
     <plugin name="phonegap-plugin-speech-synthesis" spec="https://github.com/mike-nelson/SpeechSynthesisPlugin" />
+    <plugin name="fr.pierrickrouxel.cordova.plugin.iCloudKV" spec="https://github.com/pierrickrouxel/phonegap-icloudkv-plugin" />
+    <plugin name="cordova-plugin-shared-preferences" spec="0.0.1" />
 </widget>

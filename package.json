@@ -76,6 +76,7 @@
         "de.codevise.cordova.volume": "https://github.com/whitmer/cordova-volume.git",
         "nl.x-services.plugins.backgroundaudio": "https://github.com/whitmer/cordova-plugin-backgroundaudio.git",
         "phonegap-icloudkv-plugin": "git+https://github.com/pierrickrouxel/phonegap-icloudkv-plugin.git",
-        "phonegap-plugin-speech-synthesis": "git+https://github.com/mike-nelson/SpeechSynthesisPlugin.git"
+        "phonegap-plugin-speech-synthesis": "git+https://github.com/mike-nelson/SpeechSynthesisPlugin.git",
+        "fr.pierrickrouxel.cordova.plugin.iCloudKV": "https://github.com/pierrickrouxel/phonegap-icloudkv-plugin"
     }
 }

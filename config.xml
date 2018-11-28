@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.mycoughdrop.coughdrop" version="2018.11.26" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.mycoughdrop.coughdrop" version="2018.11.27" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>CoughDrop</name>
     <description>A simple, modern communication app for struggling communicators.</description>
     <author>CoughDrop, Inc.</author>

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.mycoughdrop.coughdrop" version="2018.11.27" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.mycoughdrop.coughdrop" version="2018.12.19" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>CoughDrop</name>
     <description>A simple, modern communication app for struggling communicators.</description>
     <author>CoughDrop, Inc.</author>
@@ -44,6 +44,10 @@
         <splash height="1334" src="www/assets/splash/Default-667h.png" width="750" />
         <splash height="2208" src="www/assets/splash/Default-736h.png" width="1242" />
         <splash height="1242" src="www/assets/splash/Default-Landscape-736h.png" width="2208" />
+        <feature name="Geolocation">
+            <param name="ios-package" value="Geolocation" />
+            <param name="ios-package" value="CDVLocation" />
+        </feature>
         <config-file parent="NSMicrophoneUsageDescription" platform="ios" target="*-Info.plist">
             <string>CoughDrop would like access to your microphone.</string>
         </config-file>
@@ -55,6 +59,12 @@
         </config-file>
         <config-file parent="NSPhotoLibraryAddUsageDescription" platform="ios" target="*-Info.plist">
             <string>CoughDrop would like access to your camera and photos.</string>
+        </config-file>
+        <config-file parent="NSLocationWhenInUseUsageDescription" platform="ios" target="*-Info.plist">
+            <string>CoughDrop would like access to your location.</string>
+        </config-file>
+        <config-file parent="NSLocationAlwaysUsageDescription" platform="ios" target="*-Info.plist">
+            <string>CoughDrop would like access to your location.</string>
         </config-file>
     </platform>
     <platform name="android">
@@ -125,6 +135,7 @@
     <plugin name="fr.pierrickrouxel.cordova.plugin.iCloudKV" spec="https://github.com/pierrickrouxel/phonegap-icloudkv-plugin" />
     <plugin name="nl.x-services.plugins.backgroundaudio" spec="https://github.com/whitmer/cordova-plugin-backgroundaudio.git" />
     <plugin name="phonegap-plugin-speech-synthesis" spec="git+https://github.com/mike-nelson/SpeechSynthesisPlugin.git" />
+    <plugin name="cordova-plugin-geolocation" spec="^4.0.1" />
     <engine name="android" spec="^6.4.0" />
     <engine name="ios" spec="^4.1.1" />
 </widget>

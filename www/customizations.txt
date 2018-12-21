@@ -66,7 +66,9 @@ AndroidManifest.xml
 UPGRADING
 ios
 get ZipFileDownloader re-added
+    - add the folder to as a group to XCode
 get acap files re-added
+    - make a TTS folder/group in XCode, add all the acap libraries
 get libz.1.2.5.tbd re-added
 get audiotoolbox.framework re-added
 
@@ -76,8 +78,4 @@ cordova prepare
 in XCode, Project -> Archive, Upload to App Store
 
 android
-cordova plugin add cordova-plugin-crosswalk-webview
-cordova build android --release -- --gradleArg=-PcdvMinSdkVersion=14 
-# --gradleArg=-PcdvBuildMultipleApks=false
-cordova plugin remove cordova-plugin-crosswalk-webview
-cordova build android --release -- --gradleArg=-PcdvMinSdkVersion=19 --gradleArg=-PcdvBuildMultipleApks=false
+bin/build_android

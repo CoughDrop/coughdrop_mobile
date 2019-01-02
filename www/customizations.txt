@@ -63,6 +63,40 @@ AndroidManifest.xml
     <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
 
 
+build.gradle
+    if (false) { //Boolean.valueOf(cdvBuildMultipleApks)) {
+        productFlavors {
+            armv7 {
+                versionCode defaultConfig.versionCode*10 + 2
+                ndk {
+                    abiFilters "armeabi-v7a", ""
+                }
+            }
+            x86 {
+                versionCode defaultConfig.versionCode*10 + 4
+                ndk {
+                    abiFilters "x86", ""
+                }
+            }
+            all {
+                ndk {
+                    abiFilters "all", ""
+                }
+            }
+        }
+    }
+    else if (!cdvVersionCode) {
+      def minSdkVersion = cdvMinSdkVersion ?: privateHelpers.extractIntFromManifest("minSdkVersion")
+      // Vary versionCode by the two most common API levels:
+      // 14 is ICS, which is the lowest API level for many apps.
+      // 20 is Lollipop, which is the lowest API level for the updatable system webview.
+      if (minSdkVersion >= 20) {
+        defaultConfig.versionCode = defaultConfig.versionCode*10 + 9
+      } else if (minSdkVersion >= 14) {
+        defaultConfig.versionCode = defaultConfig.versionCode*10 + 8
+      }
+    }
+
 UPGRADING
 ios
 get ZipFileDownloader re-added

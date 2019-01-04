@@ -13,7 +13,7 @@ window.user_preferences = {"device":{"voice":{"pitch":1.0,"volume":1.0},"button_
 
 
 
-window.app_version = "2019.01.02a";
+window.app_version = "2019.01.04d";
 window.EmberENV={FEATURES:{}}
 var loader,define,requireModule,require,requirejs,runningTests=!1
 function createDeprecatedModule(e){define(e,["exports","ember-resolver/resolver","ember"],function(t,n,r){r.default.deprecate("Usage of `"+e+"` module is deprecated, please update to `ember-resolver`.",!1,{id:"ember-resolver.legacy-shims",until:"3.0.0"}),t.default=n.default})}if(function(e){"use strict"
@@ -7992,19 +7992,21 @@ e.set("status",{saving:!0}),t.save().then(function(){a.default.close({updated:!0
 e.set("status",{saving:!0}),t.save().then(function(){a.default.close({updated:!0}),e.set("status",null)},function(){e.set("status",{error:!0})})}}})}),define("frontend/controllers/edit-unit",["exports","frontend/app","frontend/utils/app_state","frontend/utils/modal"],function(e,t,n,s){Object.defineProperty(e,"__esModule",{value:!0}),e.default=s.default.ModalController.extend({opening:function(){var e=this.get("model.unit")
 this.set("unit",e),this.set("error",!1),this.set("saving",!1)},actions:{close:function(){s.default.close(!1)},save:function(){var e=this,t=e.get("model.unit")
 e.set("error",!1),e.set("saving",!0),t.save().then(function(){s.default.close({updated:!0}),e.set("saving",!1)},function(){e.set("error",!0),e.set("saving",!1)})}}})}),define("frontend/controllers/enable-logging",["exports","frontend/utils/modal","frontend/utils/persistence","frontend/utils/app_state","frontend/utils/i18n"],function(e,t,n,s,a){Object.defineProperty(e,"__esModule",{value:!0}),e.default=t.default.ModalController.extend({opening:function(){this.set("research",!1),this.set("model.user.preferences.allow_log_reports",!1)},closing:function(){this.get("research")?this.set("model.user.preferences.allow_log_reports",!0):this.set("model.user.preferences.allow_log_reports",!1),this.get("model.save")&&this.get("model.user").save()},actions:{}})})
-define("frontend/controllers/error",["exports"],function(e){Object.defineProperty(e,"__esModule",{value:!0}),e.default=Ember.Controller.extend({})}),define("frontend/controllers/find-button",["exports","frontend/utils/modal","frontend/utils/persistence","frontend/utils/i18n","frontend/utils/app_state","frontend/utils/edit_manager"],function(e,t,n,s,a,o){Object.defineProperty(e,"__esModule",{value:!0}),e.default=t.default.ModalController.extend({opening:function(){var e=this
-e.set("searchString",""),e.get("model.board")&&e.get("model.board").load_button_set().then(function(t){e.set("button_set",t)},function(){e.set("button_set",null)}),Ember.run.later(function(){Ember.$("#button_search_string").focus()},100)},search:function(){this.set("results",null)
-var e=t.default.settings_for["find-button"].board
-if(this.get("searchString")){var o=this
-o.set("loading",!0),o.set("error",null)
+define("frontend/controllers/error",["exports"],function(e){Object.defineProperty(e,"__esModule",{value:!0}),e.default=Ember.Controller.extend({})}),define("frontend/controllers/find-button",["exports","frontend/utils/modal","frontend/utils/persistence","frontend/utils/capabilities","frontend/utils/i18n","frontend/utils/app_state","frontend/utils/edit_manager"],function(e,t,n,s,a,o,r){Object.defineProperty(e,"__esModule",{value:!0}),e.default=t.default.ModalController.extend({opening:function(){var e=this
+e.set("results",null),e.set("searchString",""),e.get("model.board")&&e.get("model.board").load_button_set().then(function(t){e.set("button_set",t)},function(){e.set("button_set",null)}),Ember.run.later(function(){Ember.$("#button_search_string").focus()},100)},search:function(){var e=t.default.settings_for["find-button"].board
+if(this.get("searchString")){var r=this
+r.get("results")||r.set("loading",!0),r.set("error",null)
 this.get("model.include_other_boards")
-if(e.get("button_set")){var r=a.default.get("currentUser"),l=a.default.get("speak_mode");(a.default.get("feature_flags.find_multiple_buttons")?e.get("button_set").find_sequence(this.get("searchString"),e.get("id"),r,l):e.get("button_set").find_buttons(this.get("searchString"),e.get("id"),r,l)).then(function(e){if(console.log("results!",e),n.default.get("online"))o.set("results",e),o.set("loading",!1)
+if(e.get("button_set")){var l=o.default.get("currentUser"),i=o.default.get("speak_mode"),d=(new Date).getTime(),u=Math.random()+"-"+d
+r.set("search_id",u)
+var c="iOS"==s.default.system?200:null
+Ember.run.later(function(){r.get("search_id")==u&&(o.default.get("feature_flags.find_multiple_buttons")?e.get("button_set").find_sequence(r.get("searchString"),e.get("id"),l,i):e.get("button_set").find_buttons(r.get("searchString"),e.get("id"),l,i)).then(function(e){if(console.log("results!",e,(new Date).getTime()-d),n.default.get("online"))r.set("results",e),r.set("loading",!1)
 else{var t=[]
 e.forEach(function(e){var n=[e.image]
-e.sequence&&(n=e.steps.map(function(e){return e.button.image})),n.find(function(e){return!e||e.match(/^http/)})||t.push(e)}),Ember.RSVP.all_wait([]).then(null,function(){return Ember.RSVP.resolve()}).then(function(){o.set("results",t),o.set("loading",!1)})}o.set("results",e),o.set("loading",!1)},function(e){o.set("loading",!1),o.set("error",e.error)})}else o.set("loading",!1),o.set("error",s.default.t("button_set_not_found","Button set not downloaded, please try syncing or going online and reopening this board"))}}.observes("searchString","button_set"),actions:{pick_result:function(e){if(e.board_id==o.default.controller.get("model.id")){var n=Ember.$(".button[data-id='"+e.id+"']")
-t.default.highlight(n).then(function(){var t=o.default.find_button(e.id),n=o.default.controller.get("model")
-a.default.controller.activateButton(t,{board:n})},function(){})}else{var s=e.pre_buttons||[]
-"home"==e.pre_action&&s.unshift("home"),e.sequence?e.steps.forEach(function(e){"true_home"==e.sequence.pre&&s.push({pre:"true_home"}),e.sequence.buttons.forEach(function(e){s.push(e)}),s.push(e.button)}):s.push(e),a.default.controller.set("button_highlights",s),a.default.controller.send("highlight_button")}}}})}),define("frontend/controllers/flash-message",["exports","frontend/utils/modal","frontend/utils/app_state","frontend/utils/capabilities"],function(e,t,n,s){Object.defineProperty(e,"__esModule",{value:!0}),e.default=Ember.Controller.extend({display_class:function(){var e="alert alert-dismissable "
+e.sequence&&(n=e.steps.map(function(e){return e.button.image})),n.find(function(e){return!e||e.match(/^http/)})||t.push(e)}),Ember.RSVP.all_wait([]).then(null,function(){return Ember.RSVP.resolve()}).then(function(){r.set("results",t),r.set("loading",!1)})}r.set("results",e),r.set("loading",!1)},function(e){r.set("loading",!1),r.set("error",e.error)})},c)}else r.set("loading",!1),r.set("error",a.default.t("button_set_not_found","Button set not downloaded, please try syncing or going online and reopening this board"))}else this.set("results",null)}.observes("searchString","button_set"),actions:{pick_result:function(e){if(e.board_id==r.default.controller.get("model.id")){var n=Ember.$(".button[data-id='"+e.id+"']")
+t.default.highlight(n).then(function(){var t=r.default.find_button(e.id),n=r.default.controller.get("model")
+o.default.controller.activateButton(t,{board:n})},function(){})}else{var s=e.pre_buttons||[]
+"home"==e.pre_action&&s.unshift("home"),e.sequence?e.steps.forEach(function(e){"true_home"==e.sequence.pre&&s.push({pre:"true_home"}),e.sequence.buttons.forEach(function(e){s.push(e)}),s.push(e.button)}):s.push(e),o.default.controller.set("button_highlights",s),o.default.controller.send("highlight_button")}}}})}),define("frontend/controllers/flash-message",["exports","frontend/utils/modal","frontend/utils/app_state","frontend/utils/capabilities"],function(e,t,n,s){Object.defineProperty(e,"__esModule",{value:!0}),e.default=Ember.Controller.extend({display_class:function(){var e="alert alert-dismissable "
 return this.get("alert_type")&&(e+=this.get("alert_type")),e}.property("alert_type"),actions:{opening:function(){var e=t.default.settings_for.flash
 this.set("message",e.text),this.set("sticky",e.sticky),this.set("subscribe",e.subscribe),this.set("redirect",e.redirect)
 var s="alert-info"
@@ -9236,11 +9238,11 @@ var o=t.default.get("current_mode"),r=null
 if(n&&n.force&&(o=null),"speak"==e){var i=h.get("currentBoardState"),c=i&&i.default_level
 i||t.default.persist("board_level",null)
 var p=h.get("referenced_speak_mode_user")||h.get("currentUser")
-if(p&&"speak"!=o){var m={},f=i||n.override_state
-p.get("preferences.home_board.id")==f.id?(m.preferred=p.get("preferences.home_board.level"),m.source="home"):(p.get("preferences.sidebar_boards")||[]).forEach(function(e){e&&e.id==f.id&&(m.preferred=e.level,m.source="sidebar")}),m.preferred&&(i&&t.default.get("board_level")&&t.default.get("board_level")!=m.preferred?(m.current=t.default.get("board_level"),console.error("Need to confirm level setting",m),t.default.persist("board_level",m.current),n.override_state&&(n.override_state=Ember.$.extend({},n.override_state,{level:m.current})),c=m.current):(t.default.persist("board_level",m.preferred),n.override_state&&(n.override_state=Ember.$.extend({},n.override_state,{level:m.preferred})),c=m.preferred))}n&&n.override_state&&(n.temporary_home&&i&&i.id!=n.override_state.id?r=i:c=n.temporary_home||t.default.get("board_level")?null:n.override_state.level||c,i=n.override_state),c&&(t.default.persist("board_level",c),console.log("toggling",t.default.get("board_level"))),t.default.persist("root_board_state",i)}if(o==e)"edit"==e&&t.default.get("last_mode")?t.default.persist("current_mode",t.default.get("last_mode")):t.default.persist("current_mode","default"),"speak"==e&&h.get("currentBoardState")&&h.set("currentBoardState.reload_token",Math.random()),t.default.persist("last_mode",null),t.default.persist("copy_on_save",null)
+if(p&&"speak"!=o){var m=h.get("speakModeUser")||h.get("currentUser"),f={},_=i||n.override_state
+p.get("preferences.home_board.id")==_.id?(f.preferred=p.get("preferences.home_board.level"),f.source="home"):(p.get("preferences.sidebar_boards")||[]).forEach(function(e){e&&e.id==_.id&&(f.preferred=e.level,f.source="sidebar")}),f.preferred&&(i&&t.default.get("board_level")&&t.default.get("board_level")!=f.preferred?(f.current=t.default.get("board_level"),t.default.persist("board_level",f.current),n.override_state&&(n.override_state=Ember.$.extend({},n.override_state,{level:f.current})),p==m&&("home"==f.source?(p.set("preferences.home_board.level",f.current),p.save()):((p.get("preferences.sidebar_boards")||[]).forEach(function(e){e&&e.id==_.id&&Ember.set(e,"level",f.current)}),p.save())),c=f.current):(t.default.persist("board_level",f.preferred),n.override_state&&(n.override_state=Ember.$.extend({},n.override_state,{level:f.preferred})),c=f.preferred))}n&&n.override_state&&(n.temporary_home&&i&&i.id!=n.override_state.id?r=i:c=n.temporary_home||t.default.get("board_level")?null:n.override_state.level||c,i=n.override_state),c&&(t.default.persist("board_level",c),console.log("toggling to level",t.default.get("board_level"))),t.default.persist("root_board_state",i)}if(o==e)"edit"==e&&t.default.get("last_mode")?t.default.persist("current_mode",t.default.get("last_mode")):t.default.persist("current_mode","default"),"speak"==e&&h.get("currentBoardState")&&h.set("currentBoardState.reload_token",Math.random()),t.default.persist("last_mode",null),t.default.persist("copy_on_save",null)
 else{if("edit"==e)t.default.persist("last_mode",t.default.get("current_mode")),n.copy_on_save&&t.default.persist("copy_on_save",h.get("currentBoardState.id"))
-else if("speak"==e){var _=h.get("speakModeUser.id")&&h.get("speakModeUser.id")!=h.get("sessionUser.id")
-if(h.get("currentBoardState")&&delete h.get("currentBoardState").reload_token,h.get("currentUser")&&!n.reminded&&h.get("currentUser.expired")&&!_)return a.default.open("premium-required",{user_name:h.get("currentUser.user_name"),limited_supervisor:h.get("currentUser.subscription.limited_supervisor"),remind_to_upgrade:!0,action:"app_speak_mode"}).then(function(){n.reminded=!0,h.toggle_mode(e,n)})
+else if("speak"==e){var g=h.get("speakModeUser.id")&&h.get("speakModeUser.id")!=h.get("sessionUser.id")
+if(h.get("currentBoardState")&&delete h.get("currentBoardState").reload_token,h.get("currentUser")&&!n.reminded&&h.get("currentUser.expired")&&!g)return a.default.open("premium-required",{user_name:h.get("currentUser.user_name"),limited_supervisor:h.get("currentUser.subscription.limited_supervisor"),remind_to_upgrade:!0,action:"app_speak_mode"}).then(function(){n.reminded=!0,h.toggle_mode(e,n)})
 h.get("currentUser.preferences.device.scanning")&&d.default.mobile&&d.default.installed_app&&u.default.listen_for_input()}t.default.persist("current_mode",e)}t.default.persist("temporary_root_board_state",r),t.default.persist("sticky_board",!1),Ember.$("#stash_hover").removeClass("on_button").data("button_id",null),l.default.clear_paint_mode(),l.default.clear_preview_levels()},home_in_speak_mode:function(e){var n=(e=e||{}).user||h.get("currentUser")
 t.default.persist("board_level",null)
 var s=e.force_board_state||n&&n.get("preferences.home_board")||e.fallback_board_state||t.default.get("root_board_state")||{key:"example/yesno"}
@@ -10486,26 +10488,27 @@ d.dwell_elem.style.left=g.left+g.width/2-25+"px",d.dwell_elem.style.top=g.top+g.
 var x=d.dwell_elem.cloneNode(!0)
 x.style.animationDuration=d.dwell_timeout+"ms",x.style.webkitAnimationDuration=d.dwell_timeout+"ms",d.dwell_elem.style.left="-1000px",d.dwell_elem.parentNode.replaceChild(x,d.dwell_elem),x.classList.add("targeting"),x.classList.add(d.dwell_animation),d.dwell_elem=x}if(d.last_dwell_linger.updated=f,d.last_dwell_linger.events=d.last_dwell_linger.events||[],d.last_dwell_linger.events.push(e),t)if(f-d.last_dwell_linger.started>d.dwell_timeout)e.dwell_linger=!0,d.element_release(d.last_dwell_linger,e),d.last_triggering_dwell_event=e,d.last_dwell_linger=null,d.dwell_delay&&(d.dwell_wait=!0,Ember.run.later(function(){d.dwell_wait=!1},d.dwell_delay))
 else{var E=d.last_dwell_linger.started+d.dwell_timeout,V=f-d.last_dwell_linger.started,S=E-f;("mousemove"==e.type&&d.dwell_no_cutoff&&V>50||S<3*m/4)&&(d.linger_close_enough_later=Ember.run.later(function(){d.dwell_linger(e)},S-50))}else d.dwell_elem.classList.remove("targeting"),d.dwell_elem.style.left=e.clientX-25+"px",d.dwell_elem.style.top=e.clientY-25+"px"}else d.dwell_elem.classList.remove("targeting"),d.dwell_elem.style.left=e.clientX-25+"px",d.dwell_elem.style.top=e.clientY-25+"px"}}},find_selectable_under_event:function(e,t,n){if(void 0===(e=d.normalize_event(e)).clientX||void 0===e.clientY)return null
-var s=0,a=0
-if(d.dwell_elem){s=d.dwell_elem.style.left
-d.dwell_elem.style.left="-1000px"}if(d.dwell_icon_elem){a=d.dwell_icon_elem.style.left
-d.dwell_icon_elem.style.left="-1000px"}var o=Ember.$(".dropdown-backdrop"),r=Ember.$("#identity .dropdown.open")
-o.length>0&&r.length>0&&o.hide()
-var l=Ember.$(document.elementFromPoint(e.clientX,e.clientY)),i=l.closest(".dropdown.open")
-if(o.length>0&&r.length>0&&o.show(),0==i.length&&o.length>0){if(0==l.closest(".dropdown.open ul").length&&r.length>0){var u=Ember.$(".dropdown.open > a")
-u.length>0&&(l=u)}Ember.run.later(function(){o.remove()},300)}d.dwell_elem&&(d.dwell_elem.style.left=s),d.dwell_icon_elem&&(d.dwell_icon_elem.style.left=a)
-var c=l.closest(".advanced_selection")[0]
-if(c){if(!1===n&&l.closest(".undwellable").length>0)return null
-if("pin"==c.id)return d.element_wrap(l.closest("a")[0])
-if("word_suggestions"==c.id)return d.element_wrap(l.closest("a")[0])
-if("identity"==c.id)return l.closest("a").length>0?d.element_wrap(l.closest("a")[0]):d.element_wrap(Ember.$(c).find(".dropdown > a"))
-if("sidebar_tease"==c.id)return d.element_wrap(c)
-if("sidebar"==c.id)return d.element_wrap(l.closest(".btn,a")[0])
-if("speak_menu"==c.id)return d.element_wrap(l.closest("a")[0])
-if("HEADER"==c.tagName){var p=l.closest(".btn:not(.pass_through),#button_list")
-return p.hasClass("pass_to_btn_list")&&!1===n&&(p=Ember.$("#button_list")),d.element_wrap(p[0])}if((c.className||"").match(/board/)||"board_canvas"==c.id)return d.button_from_point(e.clientX,e.clientY)
-if("integration_overlay"==c.id)return d.element_wrap(l.closest(".integration_target")[0])
-if("highlight_box"==c.id)return d.element_wrap(c)}return null},button_from_point:function(e,t){var n=null,s=null
+if(0===e.clientX&&0===e.clientY){var s=e.target.getBoundingClientRect()
+s.x>0&&s.y>0&&s.height>0&&s.width>0&&(e.clientX=s.x+s.width/2,e.clientY=s.y+s.height/2)}var a=0,o=0
+if(d.dwell_elem){a=d.dwell_elem.style.left
+d.dwell_elem.style.left="-1000px"}if(d.dwell_icon_elem){o=d.dwell_icon_elem.style.left
+d.dwell_icon_elem.style.left="-1000px"}var r=Ember.$(".dropdown-backdrop"),l=Ember.$("#identity .dropdown.open")
+r.length>0&&l.length>0&&r.hide()
+var i=Ember.$(document.elementFromPoint(e.clientX,e.clientY)),u=i.closest(".dropdown.open")
+if(r.length>0&&l.length>0&&r.show(),0==u.length&&r.length>0){if(0==i.closest(".dropdown.open ul").length&&l.length>0){var c=Ember.$(".dropdown.open > a")
+c.length>0&&(i=c)}Ember.run.later(function(){r.remove()},300)}d.dwell_elem&&(d.dwell_elem.style.left=a),d.dwell_icon_elem&&(d.dwell_icon_elem.style.left=o)
+var p=i.closest(".advanced_selection")[0]
+if(p){if(!1===n&&i.closest(".undwellable").length>0)return null
+if("pin"==p.id)return d.element_wrap(i.closest("a")[0])
+if("word_suggestions"==p.id)return d.element_wrap(i.closest("a")[0])
+if("identity"==p.id)return i.closest("a").length>0?d.element_wrap(i.closest("a")[0]):d.element_wrap(Ember.$(p).find(".dropdown > a"))
+if("sidebar_tease"==p.id)return d.element_wrap(p)
+if("sidebar"==p.id)return d.element_wrap(i.closest(".btn,a")[0])
+if("speak_menu"==p.id)return d.element_wrap(i.closest("a")[0])
+if("HEADER"==p.tagName){var m=i.closest(".btn:not(.pass_through),#button_list")
+return m.hasClass("pass_to_btn_list")&&!1===n&&(m=Ember.$("#button_list")),d.element_wrap(m[0])}if((p.className||"").match(/board/)||"board_canvas"==p.id)return d.button_from_point(e.clientX,e.clientY)
+if("integration_overlay"==p.id)return d.element_wrap(i.closest(".integration_target")[0])
+if("highlight_box"==p.id)return d.element_wrap(p)}return null},button_from_point:function(e,t){var n=null,s=null
 d.dwell_elem&&(n=d.dwell_elem.style.left,d.dwell_elem.style.left="-1000px"),d.dwell_icon_elem&&(s=d.dwell_icon_elem.style.left,d.dwell_icon_elem.style.left="-1000px")
 var o=document.elementFromPoint(e,t)
 d.dwell_elem&&(d.dwell_elem.style.left=n),d.dwell_icon_elem&&(d.dwell_icon_elem.style.left=s)
@@ -10875,8 +10878,8 @@ var d,u=[],c=[]
 for(a=0;a<i;++a)u[a]=a,c[a]=t.charCodeAt(a)
 for(u[i]=i,a=0;a<l;++a){for(s=a+1,o=0;o<i;++o)n=s,d=e.charCodeAt(a)===c[o],(s=u[o]+(d?0:1))>(r=n+1)&&(s=r),s>(r=u[o+1]+1)&&(s=r),u[o]=n
 u[o]=s}return s}}).create({pieces:10,max_results:5})
-e.default=r}),define("frontend/config/environment",[],function(){var e={default:{modulePrefix:"frontend",environment:"production",rootURL:"/",locationType:"auto",EmberENV:{FEATURES:{}},APP:{name:"frontend",version:"0.0.2+9693631b"},exportApplicationGlobal:!1}}
-return Object.defineProperty(e,"__esModule",{value:!0}),e}),runningTests||require("frontend/app").default.create({name:"frontend",version:"0.0.2+9693631b"})
+e.default=r}),define("frontend/config/environment",[],function(){var e={default:{modulePrefix:"frontend",environment:"production",rootURL:"/",locationType:"auto",EmberENV:{FEATURES:{}},APP:{name:"frontend",version:"0.0.2+2a46df1c"},exportApplicationGlobal:!1}}
+return Object.defineProperty(e,"__esModule",{value:!0}),e}),runningTests||require("frontend/app").default.create({name:"frontend",version:"0.0.2+2a46df1c"})
 ;
 
 

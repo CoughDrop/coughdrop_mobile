@@ -1,16 +1,15 @@
+=== IOS CUSTOMIZATIONS ===
+add frameworks/libraries:
+- AssetsLibrary.framework
+- AudioToolbox.framework
+- libsqlite3.dylib
+- libz.*.tbd
+
 ios
-copy splash screen images from www/assets/splash 
-to platforms/ios/CoughDrop/Resources/splash
-
-android
-copy splash screen images from www/assets/splash
-to platforms/android/res
-
-check that icons all got copied correctly
-
-open platforms/android/src/org/apache/cordova/splashscreen/SplashScreen.java
-comment out this.removeSplashScreen();
-... for onPause? or onDestroy?
+get ZipFileDownloader re-added
+    - add the folder to as a group to XCode
+get acap files re-added
+    - copy acap folder to platforms/ios, make a TTS folder/group in XCode, add all the acap files individually
 
 ios/CoughDrop/CoughDrop-info.plist
 add
@@ -54,6 +53,17 @@ in ios/CoughDrop/Classes/MainViewController.m:
     
     [self hideKeyboardShortcutBar:self.webView];
 }
+
+
+=== ANDROID CUSTOMIZATIONS ===
+copy splash screen images from www/assets/splash
+to platforms/android/res
+
+check that icons all got copied correctly
+
+open platforms/android/src/org/apache/cordova/splashscreen/SplashScreen.java
+comment out this.removeSplashScreen();
+... for onPause? or onDestroy?
 
 
 android
@@ -100,16 +110,7 @@ build.gradle
       }
     }
 
-UPGRADING
-ios
-get ZipFileDownloader re-added
-    - add the folder to as a group to XCode
-get acap files re-added
-    - make a TTS folder/group in XCode, add all the acap libraries
-get libz.1.2.5.tbd re-added
-get audiotoolbox.framework re-added
-
-PUBLISHING
+=== PUBLISHING ===
 ios
 cordova prepare
 in XCode, Project -> Archive, Upload to App Store

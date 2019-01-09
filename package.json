@@ -52,7 +52,7 @@
         "com.mycoughdrop.coughdrop.extra-tts": "https://github.com/coughdrop/extra-tts.git",
         "com.mycoughdrop.coughdrop.misc": "git+https://github.com/CoughDrop/coughdrop_cordova_misc.git",
         "cordova-android": "^6.4.0",
-        "cordova-ios": "^4.1.1",
+        "cordova-ios": "^4.5.5",
         "cordova-plugin-battery-status": "^1.1.2",
         "cordova-plugin-blob-constructor-polyfill": "^1.0.2",
         "cordova-plugin-brightness": "^0.1.5",

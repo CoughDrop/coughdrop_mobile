@@ -62,7 +62,7 @@
         "cordova-plugin-compat": "^1.2.0",
         "cordova-plugin-device": "^1.1.7",
         "cordova-plugin-file": "^4.3.3",
-        "cordova-plugin-geolocation": "^4.0.1",
+        "cordova-plugin-geolocation": "git+https://github.com/apache/cordova-plugin-geolocation.git",
         "cordova-plugin-inappbrowser": "^1.1.1",
         "cordova-plugin-keyboard": "^1.1.5",
         "cordova-plugin-media": "^3.0.1",

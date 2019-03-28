@@ -75,6 +75,7 @@ AndroidManifest.xml
     <uses-feature android:name="android.hardware.location" android:required="false" />
     (you may have to manually modify android.json to get the required=false to stick)
 
+global search for JavaVersion.VERSION_1 => needs to be JavaVersion.VERSION_1_8
 
 build.gradle
     if (false) { //Boolean.valueOf(cdvBuildMultipleApks)) {

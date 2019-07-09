@@ -2,19 +2,19 @@
 cordova prepare
 # use crosswalk for lower-version compatibility
 # change config.xml to level=16
-xsltproc --stringparam min 16 --stringparam target 26 --stringparam max 20 -o config.xml bin/minsdk_version_change.xsl config.xml 
+xsltproc --stringparam min 16 --stringparam target 28 --stringparam max 20 -o config.xml bin/minsdk_version_change.xsl config.xml 
 # cordova plugin add cordova-plugin-crosswalk-webview
 cordova build android --release -- --gradleArg=-PcdvMinSdkVersion=16 
 cp platforms/android/build/outputs/apk/release/android-release.apk builds/android-release-lower.apk
 # change config.xml to level=19
-xsltproc --stringparam min 19 --stringparam target 26 --stringparam max '' -o config.xml bin/minsdk_version_change.xsl config.xml 
+xsltproc --stringparam min 19 --stringparam target 28 --stringparam max '' -o config.xml bin/minsdk_version_change.xsl config.xml 
 # cordova plugin add cordova-plugin-crosswalk-webview
 cordova build android --release -- --gradleArg=-PcdvMinSdkVersion=16 
 cp platforms/android/build/outputs/apk/release/android-release.apk builds/android-release-kindle.apk
 # --gradleArg=-PcdvBuildMultipleApks=false
 # remove crosswalk for higher-version compatibility with smaller footprint
 # change config.xml to level=23
-xsltproc --stringparam min 23 --stringparam target 26 --stringparam max '' -o config.xml bin/minsdk_version_change.xsl config.xml
+xsltproc --stringparam min 23 --stringparam target 28 --stringparam max '' -o config.xml bin/minsdk_version_change.xsl config.xml
 # cordova plugin remove cordova-plugin-crosswalk-webview
 cordova build android --release -- --gradleArg=-PcdvMinSdkVersion=23 --gradleArg=-PcdvBuildMultipleApks=false
 cp platforms/android/build/outputs/apk/release/android-release.apk builds/android-release.apk

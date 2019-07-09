@@ -18,10 +18,17 @@ header {
   top: 0;
   top: env(safe-area-inset-top);
 }
+#within_ember {
+  min-height: 100vh;
+}
 
 #setup_footer {
   width: auto;
   left: env(safe-area-inset-left);
   right: env(safe-area-inset-right);
   bottom: env(safe-area-inset-top);
+}
+
+html {
+  touch-action: manipulation;
 }

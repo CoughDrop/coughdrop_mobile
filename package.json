@@ -10,7 +10,6 @@
         "plugins": {
             "com.mycoughdrop.coughdrop.extra-tts": {},
             "com.mycoughdrop.coughdrop.misc": {},
-            "cordova-plugin-battery-status": {},
             "cordova-plugin-blob-constructor-polyfill": {},
             "cordova-plugin-brightness": {},
             "cordova-plugin-chrome-apps-power": {},
@@ -53,7 +52,9 @@
             "cordova-sqlite-storage": {},
             "cordova-plugin-purchase": {
                 "BILLING_KEY": "coughdrop"
-            }
+            },
+            "cordova-plugin-battery-status": {},
+            "com.vlara.aboutscreen": {}
         }
     },
     "dependencies": {
@@ -65,7 +66,7 @@
         "cordova-ios": "^4.5.5",
         "cordova-plugin-android-permissions": "^1.0.0",
         "cordova-plugin-app-launcher": "git+https://github.com/nchutchind/cordova-plugin-app-launcher.git",
-        "cordova-plugin-battery-status": "^1.1.2",
+        "cordova-plugin-battery-status": "^2.0.3",
         "cordova-plugin-blob-constructor-polyfill": "^1.0.2",
         "cordova-plugin-brightness": "^0.1.5",
         "cordova-plugin-chrome-apps-power": "^1.0.4",
@@ -96,6 +97,7 @@
         "nl.x-services.plugins.backgroundaudio": "https://github.com/whitmer/cordova-plugin-backgroundaudio.git",
         "phonegap-icloudkv-plugin": "git+https://github.com/pierrickrouxel/phonegap-icloudkv-plugin.git",
         "phonegap-nfc": "^1.0.3",
-        "phonegap-plugin-speech-synthesis": "git+https://github.com/mike-nelson/SpeechSynthesisPlugin.git"
+        "phonegap-plugin-speech-synthesis": "git+https://github.com/mike-nelson/SpeechSynthesisPlugin.git",
+        "screen-inches": "^1.0.2"
     }
 }

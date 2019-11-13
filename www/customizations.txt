@@ -66,8 +66,8 @@ open platforms/android/src/org/apache/cordova/splashscreen/SplashScreen.java
 comment out this.removeSplashScreen();
 ... for onPause? or onDestroy?
 
+copy .jar and folders with .so files for acapela to platforms/android/app/libs
 
-android
 AndroidManifest.xml
     <uses-feature android:name="android.hardware.microphone" android:required="false"/>
     <uses-feature android:name="android.hardware.camera" android:required="false"/>

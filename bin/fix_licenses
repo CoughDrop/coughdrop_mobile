@@ -1,3 +1,4 @@
 #!/bin/sh
 export ANDROID_HOME=/Users/whitmer/Library/Android/sdk/
+export ANDROID_SDK_ROOT=/Users/whitmer/Library/Android/sdk/
 # This disappears about once a week for me, I'm not smart enough to know why.

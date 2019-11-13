@@ -25,7 +25,7 @@
 </div>
 <!-- begin generated content -->
 
-<div id='enabled_frontend_features' data-list='subscriptions,assessments,custom_sidebar,snapshots,video_recording,goals,modeling,geo_sidebar,edit_before_copying,core_reports,lessonpix,translation,fast_render,audio_recordings,app_connections,enable_all_buttons,badge_progress,premium_symbols,board_levels'></div>
+<div id='enabled_frontend_features' data-list='subscriptions,assessments,custom_sidebar,snapshots,video_recording,goals,modeling,geo_sidebar,edit_before_copying,core_reports,lessonpix,translation,fast_render,audio_recordings,app_connections,enable_all_buttons,badge_progress,premium_symbols,board_levels,native_keyboard,app_store_purchases,find_multiple_buttons,new_speak_menu'></div>
 
 <!-- end generated content -->
 <script type="text/javascript" src="cordova.js"></script>
@@ -38,6 +38,9 @@
 <script type="text/javascript" async src="app.js"></script>
 <script>
   document.addEventListener('deviceready', function() {
+    if(window.navigator.splashscreen) {
+      window.navigator.splashscreen.show();
+    }
     // Cordova is still using WkWebView which I believe is what's
     // preventing it from abandoning the 300ms delay, hence the
     // need for hammer-time to be manually set, but hammer-time

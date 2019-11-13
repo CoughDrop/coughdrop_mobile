@@ -22,6 +22,7 @@ to support TLS for Amazon
 
 in ios/CoughDrop/Classes/MainViewController.m:
 
+// SHOULD NOT NEED THIS ANYMORE with keyboard plugin
 // http://stackoverflow.com/questions/32743649/hide-shortcut-keyboard-bar-for-uiwebview-in-ios-9
 #import <objc/runtime.h>
 

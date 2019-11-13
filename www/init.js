@@ -9,6 +9,7 @@
   // hacky fix for fixed position keyboard bug in ios
   window.scrollTo(document.body.scrollLeft, document.body.scrollTop);
   
+  
   if(window.navigator.splashscreen) {
     window.navigator.splashscreen.show();
   }
@@ -92,7 +93,7 @@
       window._trackJs && window._trackJs.track("splash screen wasn't hidden");
     }
   }, 30000);
-  window.app_version = "2019.07.24";
+  window.app_version = "2019.10.31a";
   window.capabilities = {installed_app: true, api_host: "https://app.mycoughdrop.com", wait_for_deviceready: true};
   navigator.standalone = navigator.standalone || (navigator.userAgent.match(/android/i) && navigator.userAgent.match(/chrome/i) && (screen.height-document.documentElement.clientHeight<40));
   var elem = document.getElementById('enabled_frontend_features');

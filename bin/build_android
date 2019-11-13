@@ -18,3 +18,6 @@ xsltproc --stringparam min 23 --stringparam target 28 --stringparam max '' -o co
 # cordova plugin remove cordova-plugin-crosswalk-webview
 cordova build android --release -- --gradleArg=-PcdvMinSdkVersion=23 --gradleArg=-PcdvBuildMultipleApks=false
 cp platforms/android/build/outputs/apk/release/android-release.apk builds/android-release.apk
+
+cordova build android --release -- --packageType=bundle --gradleArg=-PcdvMinSdkVersion=23
+cp platforms/android/build/outputs/apk/release/android-release.aab builds/android-release.aab

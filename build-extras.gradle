@@ -1,2 +1,3 @@
 // copy this file to platforms/android
-ext.cdvReleaseSigningPropertiesFile = '../../android-release-keys.properties'
+ext.cdvReleaseSigningPropertiesFile = '../../../android-release-keys.properties'
+ext.cdvVersionCodeForceAbiDigit = true

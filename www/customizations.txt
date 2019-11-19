@@ -60,21 +60,28 @@ in ios/CoughDrop/Classes/MainViewController.m:
 copy splash screen images from www/assets/splash
 to platforms/android/res
 
+copy build-extras.gradle to platforms/android
+
 check that icons all got copied correctly
 
 open platforms/android/src/org/apache/cordova/splashscreen/SplashScreen.java
 comment out this.removeSplashScreen();
 ... for onPause? or onDestroy?
 
-copy .jar and folders with .so files for acapela to platforms/android/app/libs
+copy .jar for acapela to platforms/android/app/libs
+copy folders with .so files for acapela to platforms/android/app/src/main/jniLibs
 
 AndroidManifest.xml
+    <uses-feature android:name="android.hardware.nfc" android:required="false" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.microphone" android:required="false" />
+    <uses-feature android:name="android.hardware.location" android:required="false" />
+    <uses-feature android:name="android.hardware.location.gps" android:required="false" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" android:required="false" />
     <uses-permission android:name="android.permission.WAKE_LOCK" android:required="false" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:required="false" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" android:required="false" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:required="false" />
-    <uses-feature android:name="android.hardware.location.gps" android:required="false" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" android:required="false" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" android:required="false" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" android:required="false" />
@@ -84,9 +91,9 @@ AndroidManifest.xml
     <uses-permission android:name="com.android.vending.BILLING" android:required="false" />
     <uses-permission android:name="android.permission.VIBRATE" android:required="false" />
     <uses-permission android:name="android.permission.NFC" android:required="false" />
-    <uses-feature android:name="android.hardware.nfc" android:required="false" />
     <uses-permission android:name="android.permission.EXTERNAL_STORAGE" android:required="false" />
     <uses-permission android:name="android.permission.CAMERA" android:required="false" />
+    <uses-permission android:name="android.webkit.PERMISSIONREQUEST" android:required="false" />
     (you may have to manually modify android.json to get the required=false to stick and to add missing permissions)
 
 global search for JavaVersion.VERSION_1 => needs to be JavaVersion.VERSION_1_8

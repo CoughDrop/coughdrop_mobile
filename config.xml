@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" id="com.mycoughdrop.coughdrop" version="2019.11.20">
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" id="com.mycoughdrop.coughdrop" version="2020.02.04">
     <name>CoughDrop</name>
     <description>A simple, modern communication app for struggling communicators.</description>
     <author>CoughDrop, Inc.</author>
@@ -11,7 +11,9 @@
     <preference name="LoadUrlTimeoutValue" value="120000"/>
     <preference name="DisallowOverscroll" value="true"/>
     <platform name="ios">
+        <preference name="deployment-target" value="9.0"/>
         <preference name="AutoHideSplashScreen" value="false"/>
+        <preference name="AllowInlineMediaPlayback" value="true"/>
         <preference name="BackupWebStorage" value="none"/>
         <preference name="KeyboardDisplayRequiresUserAction" value="false"/>
         <preference name="orientation" value="all"/>
@@ -125,22 +127,14 @@
     <plugin name="cordova-plugin-whitelist" spec="1"/>
     <plugin name="cordova-plugin-xhr-blob-polyfill" spec="~1.0.3"/>
     <plugin name="de.codevise.cordova.volume" spec="https://github.com/whitmer/cordova-volume.git"/>
-    <plugin name="fr.pierrickrouxel.cordova.plugin.iCloudKV" spec="https://github.com/pierrickrouxel/phonegap-icloudkv-plugin"/>
     <plugin name="nl.x-services.plugins.backgroundaudio" spec="https://github.com/whitmer/cordova-plugin-backgroundaudio.git"/>
     <plugin name="cordova-plugin-geolocation" spec="https://github.com/apache/cordova-plugin-geolocation.git"/>
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2"/>
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2"/>
-    <plugin name="cordova-plugin-x-socialsharing" spec="^5.4.4">
-        <variable name="ANDROID_SUPPORT_V4_VERSION" value="24.1.1+"/>
-    </plugin>
     <plugin name="cordova-plugin-app-launcher" spec="https://github.com/nchutchind/cordova-plugin-app-launcher.git"/>
     <plugin name="cordova-plugin-android-permissions" spec="^1.0.0"/>
     <plugin name="cordova-plugin-ios-disableshaketoedit" spec="^1.0.0"/>
     <plugin name="cordova-sqlite-storage" spec="^3.2.0"/>
-    <plugin name="cordova-plugin-purchase" spec="^8.1.1">
-        <variable name="BILLING_KEY" value="coughdrop"/>
-    </plugin>
     <plugin name="cordova-plugin-battery-status" spec="^2.0.3"/>
     <plugin name="com.vlara.aboutscreen" spec="~0.0.1"/>
-    <engine name="ios" spec="^4.5.5"/>
 </widget>

@@ -4,8 +4,8 @@
     "displayName": "CoughDrop",
     "cordova": {
         "platforms": [
-            "ios",
-            "android"
+            "android",
+            "ios"
         ],
         "plugins": {
             "com.mycoughdrop.coughdrop.extra-tts": {},
@@ -31,22 +31,15 @@
             "cordova-plugin-media": {
                 "MICROPHONE_USAGE_DESCRIPTION": " "
             },
-            "fr.pierrickrouxel.cordova.plugin.iCloudKV": {},
             "cordova-plugin-shared-preferences": {},
             "cordova-plugin-tts": {},
             "cordova-plugin-geolocation": {},
             "cordova-plugin-statusbar": {},
             "cordova-plugin-splashscreen": {},
-            "cordova-plugin-x-socialsharing": {
-                "ANDROID_SUPPORT_V4_VERSION": "24.1.1+"
-            },
             "cordova-plugin-app-launcher": {},
             "cordova-plugin-android-permissions": {},
             "cordova-plugin-ios-disableshaketoedit": {},
             "cordova-sqlite-storage": {},
-            "cordova-plugin-purchase": {
-                "BILLING_KEY": "coughdrop"
-            },
             "cordova-plugin-battery-status": {},
             "com.vlara.aboutscreen": {},
             "cordova-plugin-settings-hook": {},
@@ -54,7 +47,14 @@
             "phonegap-nfc": {
                 "NFC_USAGE_DESCRIPTION": "Read NFC Tags"
             },
-            "cordova-plugin-vibration": {}
+            "cordova-plugin-vibration": {},
+            "cordova-plugin-x-socialsharing": {
+                "ANDROID_SUPPORT_V4_VERSION": "24.1.1+",
+                "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "This app requires photo library access to function properly.",
+                "PHOTO_LIBRARY_USAGE_DESCRIPTION": "This app requires photo library access to function properly."
+            },
+            "fr.pierrickrouxel.cordova.plugin.iCloudKV": {},
+            "cordova-clipboard": {}
         }
     },
     "dependencies": {
@@ -63,7 +63,8 @@
         "com.mycoughdrop.coughdrop.extra-tts": "https://github.com/coughdrop/extra-tts.git",
         "com.mycoughdrop.coughdrop.misc": "git+https://github.com/CoughDrop/coughdrop_cordova_misc.git",
         "cordova-android": "^8.1.0",
-        "cordova-ios": "^4.5.5",
+        "cordova-clipboard": "^1.3.0",
+        "cordova-ios": "^5.1.0",
         "cordova-plugin-android-permissions": "^1.0.0",
         "cordova-plugin-app-launcher": "git+https://github.com/nchutchind/cordova-plugin-app-launcher.git",
         "cordova-plugin-battery-status": "^2.0.3",
@@ -80,7 +81,6 @@
         "cordova-plugin-media": "^3.0.1",
         "cordova-plugin-media-capture": "^1.4.3",
         "cordova-plugin-network-information": "^1.3.4",
-        "cordova-plugin-purchase": "^8.1.1",
         "cordova-plugin-settings-hook": "^0.3.1",
         "cordova-plugin-shared-preferences": "0.0.1",
         "cordova-plugin-splashscreen": "^5.0.2",
@@ -88,12 +88,11 @@
         "cordova-plugin-tts": "git+https://github.com/vilic/cordova-plugin-tts.git",
         "cordova-plugin-vibration": "^3.1.1",
         "cordova-plugin-whitelist": "^1.3.3",
-        "cordova-plugin-x-socialsharing": "^5.4.4",
+        "cordova-plugin-x-socialsharing": "^5.6.2",
         "cordova-plugin-xhr-blob-polyfill": "^1.0.3",
         "cordova-sqlite-storage": "^3.2.0",
         "de.codevise.cordova.volume": "git+https://github.com/whitmer/cordova-volume.git",
         "es6-promise-plugin": "^4.2.2",
-        "fr.pierrickrouxel.cordova.plugin.iCloudKV": "https://github.com/pierrickrouxel/phonegap-icloudkv-plugin",
         "nl.x-services.plugins.backgroundaudio": "https://github.com/whitmer/cordova-plugin-backgroundaudio.git",
         "phonegap-icloudkv-plugin": "git+https://github.com/pierrickrouxel/phonegap-icloudkv-plugin.git",
         "phonegap-nfc": "^1.0.4",

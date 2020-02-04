@@ -5,8 +5,8 @@ xsltproc --stringparam min 19 --stringparam target 28 --stringparam max 20 -o co
 cordova build android --release -- --gradleArg=-PcdvMinSdkVersion=19 --gradleArg=-PcdvVersionCodeForceAbiDigit=1  --minSdkVersion=19
 cp platforms/android/app/build/outputs/apk/release/app-release.apk builds/android-release-lower.apk
 # change config.xml to level=19
-xsltproc --stringparam min 19 --stringparam target 28 --stringparam max '' -o config.xml bin/minsdk_version_change.xsl config.xml 
-cordova build android --release -- --gradleArg=-PcdvMinSdkVersion=19 --gradleArg=-PcdvVersionCodeForceAbiDigit=1 --minSdkVersion=19
+xsltproc --stringparam min 22 --stringparam target 28 --stringparam max '' -o config.xml bin/minsdk_version_change.xsl config.xml 
+cordova build android --release -- --gradleArg=-PcdvMinSdkVersion=22 --gradleArg=-PcdvVersionCodeForceAbiDigit=1 --minSdkVersion=22
 cp platforms/android/app/build/outputs/apk/release/app-release.apk builds/android-release-kindle.apk
 # --gradleArg=-PcdvBuildMultipleApks=false
 # change config.xml to level=23

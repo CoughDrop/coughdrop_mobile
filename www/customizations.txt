@@ -1,59 +1,87 @@
+// DON'T install cordova-plugin-purchase on Android if you plan to submit to the Android App Store
+npm install -g plugman
+plugman install --platform ios --plugin cordova-plugin-purchase --project platforms/ios
+
+
 === IOS CUSTOMIZATIONS ===
 add frameworks/libraries:
 - AssetsLibrary.framework
 - AudioToolbox.framework
 - libsqlite3.dylib
 - libz.*.tbd
+Build Phases -> Link Binary With Libraries
+- make CoreNFC optional
 
-ios
-get ZipFileDownloader re-added
+get ZipFileDownloader re-added?//.l
     - add the folder to as a group to XCode
 get acap files re-added
     - copy acap folder to platforms/ios, make a TTS folder/group in XCode, add all the acap files individually
 
-ios/CoughDrop/CoughDrop-info.plist
-add
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
-to support TLS for Amazon
+CDVTTS.m:
+- (void)speak:(CDVInvokedUrlCommand*)command {
+    ...
+    AVSpeechUtterance* utterance = [[AVSpeechUtterance new] initWithString:text];
+    if(ident) {
+        utterance.voice = [AVSpeechSynthesisVoice voiceWithIdentifier:ident];
+    } else {
+        utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:locale];
+    }
+
+- (void)checkLanguage:(CDVInvokedUrlCommand *)command {
+    ...
+    NSString* ident = [options objectForKey:@"id"];
+    for (id voiceName in voices) {
+        languages = [languages stringByAppendingString:@","];
+        languages = [languages stringByAppendingString:[voiceName valueForKey:@"language"]];
+        languages = [languages stringByAppendingString:@":"];
+        languages = [languages stringByAppendingString:[voiceName valueForKey:@"identifier"]];
+    }
+
+
+// APPEARS TO NOT BE NECESSARY
+// ios/CoughDrop/CoughDrop-info.plist
+// add
+// 	<key>NSAppTransportSecurity</key>
+// 	<dict>
+// 		<key>NSAllowsArbitraryLoads</key>
+// 		<true/>
+// 	</dict>
+// to support TLS for Amazon
 
 in ios/CoughDrop/Classes/MainViewController.m:
 
 // SHOULD NOT NEED THIS ANYMORE with keyboard plugin
 // http://stackoverflow.com/questions/32743649/hide-shortcut-keyboard-bar-for-uiwebview-in-ios-9
-#import <objc/runtime.h>
-
-- (void) hideKeyboardShortcutBar: (UIView *)view
-{
-    for (UIView *sub in view.subviews) {
-        [self hideKeyboardShortcutBar:sub];
-        if ([NSStringFromClass([sub class]) isEqualToString:@"UIWebBrowserView"]) {
-            
-            Method method = class_getInstanceMethod(sub.class, @selector(inputAccessoryView));
-            IMP newImp = imp_implementationWithBlock(^(id _s) {
-                if ([sub respondsToSelector:@selector(inputAssistantItem)]) {
-                    UITextInputAssistantItem *inputAssistantItem = [sub inputAssistantItem];
-                    inputAssistantItem.leadingBarButtonGroups = @[];
-                    inputAssistantItem.trailingBarButtonGroups = @[];
-                }
-                return nil;
-            });
-            method_setImplementation(method, newImp);
-            
-        }
-    }
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    
-    [self hideKeyboardShortcutBar:self.webView];
-}
+// #import <objc/runtime.h>
+// 
+// - (void) hideKeyboardShortcutBar: (UIView *)view
+// {
+//     for (UIView *sub in view.subviews) {
+//         [self hideKeyboardShortcutBar:sub];
+//         if ([NSStringFromClass([sub class]) isEqualToString:@"UIWebBrowserView"]) {
+//             
+//             Method method = class_getInstanceMethod(sub.class, @selector(inputAccessoryView));
+//             IMP newImp = imp_implementationWithBlock(^(id _s) {
+//                 if ([sub respondsToSelector:@selector(inputAssistantItem)]) {
+//                     UITextInputAssistantItem *inputAssistantItem = [sub inputAssistantItem];
+//                     inputAssistantItem.leadingBarButtonGroups = @[];
+//                     inputAssistantItem.trailingBarButtonGroups = @[];
+//                 }
+//                 return nil;
+//             });
+//             method_setImplementation(method, newImp);
+//             
+//         }
+//     }
+// }
+// 
+// - (void)viewDidLoad
+// {
+//     [super viewDidLoad];
+//     // Do any additional setup after loading the view from its nib.
+//     
+//     [self hideKeyboardShortcutBar:self.webView];
+// }
 
 
 === ANDROID CUSTOMIZATIONS ===
@@ -139,3 +167,41 @@ in XCode, Project -> Archive, Upload to App Store
 
 android
 bin/build_android
+
+=== PLUGINS ===
+com.mycoughdrop.coughdrop.extra-tts 0.0.1 "ExtraTTS"
+com.mycoughdrop.coughdrop.misc 0.0.1 "CoughDropMisc"
+com.vlara.aboutscreen 0.0.1 "AboutScreen"
+cordova-plugin-android-permissions 1.0.0 "Permissions"
+cordova-plugin-app-launcher 0.4.0 "Launcher"
+cordova-plugin-battery-status 2.0.3 "Battery"
+cordova-plugin-blob-constructor-polyfill 1.0.2 "Blob constructor shim"
+cordova-plugin-brightness 0.1.5 "Brightness"
+cordova-plugin-chrome-apps-power 1.0.4 "Chrome Apps Power API"
+cordova-plugin-compat 1.2.0 "Compat"
+cordova-plugin-device 1.1.7 "Device"
+cordova-plugin-file 4.3.3 "File"
+cordova-plugin-geolocation 4.0.2-dev "Geolocation"
+cordova-plugin-inappbrowser 1.1.1 "InAppBrowser"
+cordova-plugin-ios-disableshaketoedit 1.0.0 "iOS Disable Shake to Edit"
+cordova-plugin-keyboard 1.1.5 "Keyboard"
+cordova-plugin-media 3.0.1 "Media"
+cordova-plugin-media-capture 1.4.3 "Capture"
+cordova-plugin-network-information 1.3.4 "Network Information"
+cordova-plugin-purchase 8.1.1 "Purchase"
+cordova-plugin-settings-hook 0.2.7 "Cordova Settings Hooks"
+cordova-plugin-shared-preferences 0.0.1 "Cordova Plugin for Android SharedPreferences"
+cordova-plugin-splashscreen 5.0.2 "Splashscreen"
+cordova-plugin-statusbar 2.4.2 "StatusBar"
+cordova-plugin-tts 0.2.3 "TTS"
+cordova-plugin-vibration 3.1.1 "Vibration"
+cordova-plugin-whitelist 1.3.3 "Whitelist"
+cordova-plugin-x-socialsharing 5.4.4 "SocialSharing"
+cordova-plugin-xhr-blob-polyfill 1.0.3 "XHR Blob Response Type Polyfill"
+cordova-sqlite-storage 3.2.0 "Cordova sqlite storage plugin - cordova-sqlite-storage plugin version"
+de.codevise.cordova.volume 0.0.1 "Volume"
+es6-promise-plugin 4.2.2 "Promise"
+fr.pierrickrouxel.cordova.plugin.iCloudKV 0.3.0 "iCloudKV"
+nl.x-services.plugins.backgroundaudio 1.0.1 "BackgroundAudio"
+phonegap-nfc 1.0.4 "NFC"
+phonegap-plugin-speech-synthesis 0.1.1 "SpeechSynthesis"

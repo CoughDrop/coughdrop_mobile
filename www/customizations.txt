@@ -21,7 +21,7 @@ CDVTTS.m:
 - (void)speak:(CDVInvokedUrlCommand*)command {
     ...
     AVSpeechUtterance* utterance = [[AVSpeechUtterance new] initWithString:text];
-    if(ident) {
+    if(ident != nil) {
         utterance.voice = [AVSpeechSynthesisVoice voiceWithIdentifier:ident];
     } else {
         utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:locale];

@@ -27,6 +27,20 @@ header {
   -webkit-touch-callout: none; /* disable the IOS popup when long-press on a link */
 }
 
+#mobile_cursor {
+  transition: left 0.1s, top 0.1s;
+  transition-timing-function: ease-in-out;
+  border-radius: 30px;
+  position: fixed; 
+  left: -50px; 
+  top: -50px; 
+  width: 20px; 
+  height: 20px; 
+  background: rgba(255, 0, 0, 0.5);
+  border: 2px solid #fff;
+  box-shadow: 0px 0px 20px #000;
+}
+
 #setup_footer {
   width: auto;
   left: env(safe-area-inset-left);

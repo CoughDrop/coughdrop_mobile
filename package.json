@@ -54,7 +54,9 @@
                 "PHOTO_LIBRARY_USAGE_DESCRIPTION": "This app requires photo library access to function properly."
             },
             "fr.pierrickrouxel.cordova.plugin.iCloudKV": {},
-            "cordova-clipboard": {}
+            "cordova-clipboard": {},
+            "jabberwocky-cordova-plugin-ios": {},
+            "cordova-plugin-add-swift-support": {}
         }
     },
     "dependencies": {
@@ -65,12 +67,14 @@
         "cordova-android": "^8.1.0",
         "cordova-clipboard": "^1.3.0",
         "cordova-ios": "^5.1.0",
+        "cordova-plugin-add-swift-support": "2.0.2",
         "cordova-plugin-android-permissions": "^1.0.0",
         "cordova-plugin-app-launcher": "git+https://github.com/nchutchind/cordova-plugin-app-launcher.git",
         "cordova-plugin-battery-status": "^2.0.3",
         "cordova-plugin-blob-constructor-polyfill": "^1.0.2",
         "cordova-plugin-brightness": "^0.1.5",
         "cordova-plugin-chrome-apps-power": "^1.0.4",
+        "cordova-plugin-cocoapod-support": "^1.6.2",
         "cordova-plugin-compat": "^1.2.0",
         "cordova-plugin-device": "^1.1.7",
         "cordova-plugin-file": "^4.3.3",
@@ -94,6 +98,7 @@
         "de.codevise.cordova.volume": "git+https://github.com/whitmer/cordova-volume.git",
         "es6-promise-plugin": "^4.2.2",
         "nl.x-services.plugins.backgroundaudio": "https://github.com/whitmer/cordova-plugin-backgroundaudio.git",
+        "org.swiftable.jabberwocky.cordova.plugin": "git+https://github.com/swiftablellc/jabberwocky-cordova-plugin-ios.git",
         "phonegap-icloudkv-plugin": "git+https://github.com/pierrickrouxel/phonegap-icloudkv-plugin.git",
         "phonegap-nfc": "^1.0.4",
         "phonegap-plugin-speech-synthesis": "^0.1.1",

@@ -15,8 +15,6 @@ document.addEventListener('deviceready', function() {
       // for smoothing
       if(res.action == 'gaze' || res.action == 'head_point') {
         var orientation = window.capabilities.orientation();
-        // window.ppix = 264; // TODO: remove these after update
-        // window.ppiy = 264;
         var xpx = res.gaze_x*(window.ppix || 96) / window.devicePixelRatio;
         var ypx = res.gaze_y*(window.ppiy || 96) / window.devicePixelRatio;
         // Origin (x=0, y=0 should be the currrent location of the camera)
@@ -223,16 +221,26 @@ document.addEventListener('deviceready', function() {
   }
 });
 
-window.capabilities.eye_gaze.listen = function() {
-            if(!window.capabilities.eye_gaze.listening) {
-                window.capabilities.eye_gaze.listening = true;
-                return eye_gaze.listen();
-            } else { return true; }
-        };
-        window.capabilities.eye_gaze.stop_listening = function() {
-            window.capabilities.eye_gaze.listening = false;
-            return eye_gaze.stop_listening();
-        };
-        window.capabilities.eye_gaze.calibrate = eye_gaze.calibrate;
-        window.capabilities.eye_gaze.calibratable = eye_gaze.calibratable;
-        window.capabilities.eye_gaze.available = true;
+// ANDROID face mesh tracking
+// https://github.com/ManuelTS/augmentedFaceMeshIndices
+// Left wink - distance from 159 (top) to 145 should approach 0
+// Right wink - distance from 386 (top) to 374 should approach 0
+// Left eyebrow - distance from 223 (top) to 159 should increase
+// Right eyebrow - distance from 443 (top) to 386 should increase
+// Open mouth - distance from 11 (top) to 16 should increase
+// Left smirk - distance from 206 (top) to 57 should decrease
+// Right smirk - distance from 426 (top) to 287 should decrease
+
+// window.capabilities.eye_gaze.listen = function() {
+//             if(!window.capabilities.eye_gaze.listening) {
+//                 window.capabilities.eye_gaze.listening = true;
+//                 return eye_gaze.listen();
+//             } else { return true; }
+//         };
+//         window.capabilities.eye_gaze.stop_listening = function() {
+//             window.capabilities.eye_gaze.listening = false;
+//             return eye_gaze.stop_listening();
+//         };
+//         window.capabilities.eye_gaze.calibrate = eye_gaze.calibrate;
+//         window.capabilities.eye_gaze.calibratable = eye_gaze.calibratable;
+//         window.capabilities.eye_gaze.available = true;

@@ -55,8 +55,8 @@
             },
             "fr.pierrickrouxel.cordova.plugin.iCloudKV": {},
             "cordova-clipboard": {},
-            "jabberwocky-cordova-plugin-ios": {},
-            "cordova-plugin-add-swift-support": {}
+            "cordova-plugin-add-swift-support": {},
+            "jabberwocky-cordova-plugin-ios": {}
         }
     },
     "dependencies": {

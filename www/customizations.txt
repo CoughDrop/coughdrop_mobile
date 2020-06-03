@@ -4,6 +4,10 @@ plugman install --platform ios --plugin cordova-plugin-purchase --project platfo
 
 
 === IOS CUSTOMIZATIONS ===
+WKWEBVIEW SEE https://cordova.apache.org/howto/2020/03/18/wkwebviewonly.html
+in platforms/ios/CoughDrop/Plugins/cordova-labs-local-webserver/CDVLocalWebServer.m
+- set cacheAge:0 to cacheAge:86400 for all instances except under addAppFileSystemHandler
+
 add frameworks/libraries:
 - AssetsLibrary.framework
 - AudioToolbox.framework
@@ -12,7 +16,7 @@ add frameworks/libraries:
 Build Phases -> Link Binary With Libraries
 - make CoreNFC optional
 
-get ZipFileDownloader re-added?//.l
+get ZipFileDownloader re-added
     - add the folder to as a group to XCode
 get acap files re-added
     - copy acap folder to platforms/ios, make a TTS folder/group in XCode, add all the acap files individually

@@ -171,6 +171,7 @@ bin/build_android
 === PLUGINS ===
 com.mycoughdrop.coughdrop.extra-tts 0.0.1 "ExtraTTS"
 com.mycoughdrop.coughdrop.misc 0.0.1 "CoughDropMisc"
+com.mycoughdrop.coughdrop.face 0.0.1 "CoughDropFace"
 com.vlara.aboutscreen 0.0.1 "AboutScreen"
 cordova-plugin-android-permissions 1.0.0 "Permissions"
 cordova-plugin-app-launcher 0.4.0 "Launcher"

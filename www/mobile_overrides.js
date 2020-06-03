@@ -1,15 +1,69 @@
 document.addEventListener('deviceready', function() {
   if (window.capabilities) {
+    console.log("EYES", Object.keys(window.capabilities), window.capabilities.eye_gaze);
     jq = window.Ember && window.Ember.$;
     var div = document.createElement('div'); 
     div.id = "mobile_cursor";
     div.style.zIndex = 9999; 
     document.body.appendChild(div); 
+    var center = document.createElement('div'); 
+    center.id = "mobile_center_check";
+    center.style.zIndex = 9999; 
+    var inner = document.createElement('div');
+    inner.classList.add('prompt');
+    inner.innerText = "Look Here";
+    center.appendChild(inner);
+    document.body.appendChild(center); 
     var delivery_debounce = null;
     var dropped_heads = [];
     var dropped_eyes = [];
+    var camera_locations = {};
+
+    var mini_calibrate = function(xpx, ypx) {
+      var orientation = window.capabilities.orientation();
+      var now = (new Date()).getTime();
+      if(camera_locations.for != orientation.layout) {
+        camera_locations.for = orientation.layout;
+        center.style.display = 'block';
+        setTimeout(function() {
+          if(camera_locations.for == orientation.layout) {
+            center.style.display = 'none';
+            camera_locations = {};
+          }
+        }, 30000);
+      }
+      camera_locations["tally" + orientation.layout] = camera_locations["tally" + orientation.layout] || [];
+      if(xpx && ypx) {
+        var tally = camera_locations["tally" + orientation.layout];
+        tally.started = tally.started || now;
+        tally.push([xpx, ypx]);
+        if((now - tally.started) > 3000 && tally.length > 20) {
+          var avg_x = 0, avg_y = 0, count_x = 0, count_y = 0;
+          for(var idx = 0; idx < tally.length; idx++) {
+            var power = idx + 1;
+            if(idx < (tally.length * 3)) { power = power / 3; }
+            if(idx > (tally.length * 2 / 3)) { power = power * 5; }
+            avg_x = avg_x + (tally[idx][0] * power);
+            count_x = count_x + power;
+            avg_y = avg_y + (tally[idx][1] * power);
+            count_y = count_y + power;
+          }
+          avg_x = avg_x / count_x;
+          avg_y = avg_y / count_y;
+          camera_locations[orientation.layout] = {
+            x: avg_x - (window.innerWidth / 2),
+            y: avg_y - (window.innerHeight / 2)
+          };
+          camera_locations["tally" + orientation.layout] = [];
+          camera_locations.for = null;
+          window.locs = camera_locations;
+        }
+      }
+    };
 
     var handle_event = function(res) {
+      jq = jq || window.Ember && window.Ember.$;
+      camera_locations = camera_locations || {};
       var elem = document.getElementById('linger');
       // TODO: collect multiple events and average them
       // for smoothing
@@ -17,21 +71,40 @@ document.addEventListener('deviceready', function() {
         var orientation = window.capabilities.orientation();
         var xpx = res.gaze_x*(window.ppix || 96) / window.devicePixelRatio;
         var ypx = res.gaze_y*(window.ppiy || 96) / window.devicePixelRatio;
+        if(capabilities.system == 'Android' && res.action == 'head_point') {
+          if(!camera_locations[orientation.layout]) {
+            mini_calibrate(xpx, ypx);
+            return;
+          } else {
+            center.style.display = 'none';
+            xpx = xpx - camera_locations[orientation.layout].x;
+            ypx = ypx - camera_locations[orientation.layout].y;
+            // calibrate it to the center
+          }
+        }
         // Origin (x=0, y=0 should be the currrent location of the camera)
         // For x: looking left of the camera = negative, looking right = positive
         // For y: looking above the camera = positive, looking down = negative
-        if(orientation.layout == 'landscape-primary') {
-          xpx = xpx;
-          ypx = (screen.width / 2) - ypx;
-        } else if(orientation.layout == 'landscape-secondary') {
-          xpx = (screen.height) + (xpx);
-          ypx = (screen.width / 2) - ypx;
-        } else if(orientation.layout == 'portrait-primary') {
-          xpx = xpx + (screen.width / 2);
-          ypx = ypx;
-        } else if(orientation.layout == 'portrait-secondary') {
-          xpx = (screen.width / 2) + (xpx);
-          ypx = (screen.height) - (ypx);
+        if(!camera_locations[orientation.layout]) {
+          var screen_width = screen.width;
+          var screen_height = screen.height;
+          if(capabilities.system == 'iOS' && orientation.layout.match(/landscape/)) {
+            screen_width = screen.height;
+            screen_height = screen.width;
+          }
+          if(orientation.layout == 'landscape-primary') {
+            xpx = xpx;
+            ypx = (screen_height / 2) - ypx;  
+          } else if(orientation.layout == 'landscape-secondary') {
+            xpx = (screen_width) + (xpx);
+            ypx = (screen_height / 2) - ypx;
+          } else if(orientation.layout == 'portrait-primary') {
+            xpx = xpx + (screen_width / 2);
+            ypx = ypx;
+          } else if(orientation.layout == 'portrait-secondary') {
+            xpx = (screen_width / 2) + (xpx);
+            ypx = (screen_height) - (ypx);
+          }
         }
         if(res.action == 'gaze') {
           var x_max = window.innerWidth;
@@ -71,7 +144,7 @@ document.addEventListener('deviceready', function() {
           }
           if(res.action == 'head_point') {
             // Head pointing should still trigger when off-screen
-            if(orientation.layout.match(/landscape/)) {
+            if(orientation.layout.match(/landscape/) && capabilities.system == 'iOS') {
               xpx = Math.min(Math.max(xpx, 0), screen.height);
               ypx = Math.min(Math.max(ypx, 0), screen.width);
             } else {
@@ -106,6 +179,7 @@ document.addEventListener('deviceready', function() {
             delivery_debounce = null;
           }, 50);
           var e = jq.Event('headtilt');
+          console.log("HEADTILT", res);
           e.vertical = res.head_tilt_y;
           e.horizontal = res.head_tilt_x;
           if(dropped_heads.length > 0) {
@@ -140,9 +214,11 @@ document.addEventListener('deviceready', function() {
     }
     var gaze = {};
     // listen should be idempotent
+    window.capabilities.eye_gaze = window.capabilities.eye_gaze || {};
     window.capabilities.eye_gaze.listen = function() {
+      camera_locations = {};
       if(!gaze.listening) {
-        var layout = capabilities.orientation().layout || "none";
+        var layout = (capabilities.orientation() || {}).layout || "none";
         gaze.listening = true;
         cordova.exec(function(res) { 
           handle_event(res);
@@ -171,13 +247,18 @@ document.addEventListener('deviceready', function() {
     }
     window.capabilities.eye_gaze.available = false;
 
+    window.capabilities.head_tracking = window.capabilities.head_tracking || {};
     // listen should be idempotent
     window.capabilities.head_tracking.listen = function(options) {
+      camera_locations = {};
       options = options || {};
       if(!gaze.listening) {
-        var layout = capabilities.orientation().layout || "none";
+        var layout = (capabilities.orientation() || {}).layout || "none";
         gaze.listening = true;
         var head_pointing = !!options.head_pointing;
+        if(capabilities.system == 'Android' && options.head_pointing) {
+          mini_calibrate();
+        }
         cordova.exec(function(res) { 
           handle_event(res);
         }, function(err) { 
@@ -208,7 +289,16 @@ document.addEventListener('deviceready', function() {
     cordova.exec(function(res) { 
       if(res && res.supported) {
         console.log("Face Tracking/TrueDepth is supported!");
-        window.capabilities.eye_gaze.available = true;
+        if(res.eyes !== false) {
+          window.capabilities.eye_gaze.available = true;
+        }
+        if(res.ppi) {
+          window.ppix = res.ppi;
+          window.ppiy = res.ppi;
+        }
+        if(res.default_orientation && res.default_orientation != "unknown") {
+          capabilities.default_orientation = res.default_orientation;
+        }
         window.capabilities.head_tracking.available = true;
       }
     }, function(err) { 
@@ -223,6 +313,7 @@ document.addEventListener('deviceready', function() {
 
 // ANDROID face mesh tracking
 // https://github.com/ManuelTS/augmentedFaceMeshIndices
+// Calibrate - distance from 5 (top) to 4, nose height
 // Left wink - distance from 159 (top) to 145 should approach 0
 // Right wink - distance from 386 (top) to 374 should approach 0
 // Left eyebrow - distance from 223 (top) to 159 should increase

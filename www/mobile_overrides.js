@@ -81,6 +81,10 @@ document.addEventListener('deviceready', function() {
           }
           avg_x = avg_x / count_x;
           avg_y = avg_y / count_y;
+          // TODO: store these orientation values so calibration
+          // can be re-used. Then add option to manually calibrate
+          // in preferences.
+          // TODO: store different calibrations for gaze vs. head-pointing
           camera_locations[orientation.layout] = {
             x: avg_x - (window.innerWidth / 2),
             y: avg_y - (window.innerHeight / 2)
@@ -93,7 +97,7 @@ document.addEventListener('deviceready', function() {
     };
 
     var gaze_history = [];
-    var gaze_threshold = 15;
+    var gaze_threshold = 20;
     window.gaze_history = gaze_history;
     var handle_event = function(res) {
       jq = jq || window.Ember && window.Ember.$;
@@ -103,7 +107,7 @@ document.addEventListener('deviceready', function() {
       if(res.action == 'gaze' || res.action == 'head_point') {
         var xpx = res.gaze_x*(window.ppix || 96) / window.devicePixelRatio;
         var ypx = res.gaze_y*(window.ppiy || 96) / window.devicePixelRatio;
-        if(capabilities.system == 'Android' && res.action == 'head_point') {
+        if(res.action == 'head_point') {
           if(!camera_locations[orientation.layout]) {
             mini_calibrate(xpx, ypx);
             return;
@@ -169,10 +173,12 @@ document.addEventListener('deviceready', function() {
           });
           avg_x = avg_x / gaze_history.length;
           avg_y = avg_y / gaze_history.length;
-          var diff_x = Math.abs(gaze_history.x - avg_x);
-          var diff_y = Math.abs(gaze_history.y - avg_y);
+          var diff_x = Math.abs(gaze_history[0].x - avg_x);
+          var diff_y = Math.abs(gaze_history[0].y - avg_y);
           // - If very little movement, use the oldest in history
           if(diff_x < gaze_threshold || diff_y < gaze_threshold) {
+            // TODO: This is useless right now, re-think the algorithm
+            // (also it should probably move after the debounce)
             if(diff_x < gaze_threshold) {
               xpx = new_history[0].x + (Math.random() - 0.5);
             }
@@ -194,7 +200,6 @@ document.addEventListener('deviceready', function() {
           delivery_debounce = setTimeout(function() {
             delivery_debounce = null;
           }, 50);
-          console.log("x" + res.gaze_x + "  y" + res.gaze_y); 
 
           var duration = 10;
           if(dropped_eyes.length > 0) {
@@ -246,7 +251,7 @@ document.addEventListener('deviceready', function() {
             delivery_debounce = null;
           }, 50);
           var e = jq.Event('headtilt');
-          if(capabilities.system == 'Android') {
+          if(true) {
             if(!camera_locations[orientation.layout]) {
               mini_calibrate('tilt');
               return;
@@ -332,7 +337,7 @@ document.addEventListener('deviceready', function() {
         var layout = (capabilities.orientation() || {}).layout || "none";
         gaze.listening = true;
         var head_pointing = !!options.head_pointing;
-        if(capabilities.system == 'Android' && options.head_pointing) {
+        if(true) {
           mini_calibrate();
         }
         cordova.exec(function(res) { 

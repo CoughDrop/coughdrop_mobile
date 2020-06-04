@@ -70,10 +70,32 @@ header {
   top: calc(50vh - 25px); 
   width: 50px; 
   height: 50px; 
-  background: rgba(255, 0, 0, 0.5);
+  background: rgba(255, 0, 0, 0.4);
   border: 2px solid #fff;
   box-shadow: 0px 0px 20px #000;
   animation: throb 1.5s ease-in-out infinite;
+  transition: background-color 1s ease, width 1s ease, height 1s ease, left 1s ease, top 1s ease;
+}
+#mobile_center_check.level_1::after {
+  background: rgba(255, 0, 0, 0.6);
+  width: 40px;
+  height: 40px;
+  left: calc(50vw - 20px);
+  top: calc(50vh - 20px);
+}
+#mobile_center_check.level_2::after {
+  background: rgba(255, 0, 0, 0.8);
+  width: 30px;
+  height: 30px;
+  left: calc(50vw - 15px);
+  top: calc(50vh - 15px);
+}
+#mobile_center_check.level_3::after {
+  background: rgba(255, 0, 0, 1.0);
+  width: 20px;
+  height: 20px;
+  left: calc(50vw - 10px);
+  top: calc(50vh - 10px);
 }
 
 #setup_footer {

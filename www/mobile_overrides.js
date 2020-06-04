@@ -25,6 +25,7 @@ document.addEventListener('deviceready', function() {
       if(camera_locations.for != orientation.layout) {
         camera_locations.for = orientation.layout;
         center.style.display = 'block';
+        // Give up trying to calibrate after 30 seconds
         setTimeout(function() {
           if(camera_locations.for == orientation.layout) {
             center.style.display = 'none';
@@ -33,12 +34,42 @@ document.addEventListener('deviceready', function() {
         }, 30000);
       }
       camera_locations["tally" + orientation.layout] = camera_locations["tally" + orientation.layout] || [];
-      if(xpx && ypx) {
+      var size = camera_locations["tally" + orientation.layout].length;
+      var started = camera_locations["tally" + orientation.layout].started || 0;
+      if(size > 15 && (now - started) > 2250) {
+        center.setAttribute('class', 'level_3');
+      } else if(size > 10 && (now - started) > 1500) {
+        center.setAttribute('class', 'level_2');
+      } else if(size > 5 && (now - started) > 750) {
+        center.setAttribute('class', 'level_1');
+      } else {
+        center.setAttribute('class', '');
+      }
+      if(xpx == 'tilt') {
+        var tally = camera_locations["tally" + orientation.layout];
+        tally.started = tally.started || now;
+        tally.push([now]);
+        // Collect enough samples to gain confidence
+        if((now - tally.started) > 3000 && tally.length > 20) {
+          console.log("DONE TILT CALIBRATION");
+          camera_locations[orientation.layout] = {
+            x: 0,
+            y: 0
+          };
+          camera_locations["tally" + orientation.layout] = [];
+          camera_locations.for = null;
+          window.locs = camera_locations;
+          cordova.exec(function(res) { }, function(err) { 
+          }, 'CoughDropFace', 'set_face', []);
+        }
+      } if(xpx && ypx) {
         var tally = camera_locations["tally" + orientation.layout];
         tally.started = tally.started || now;
         tally.push([xpx, ypx]);
+        // Collect enough samples to gain confidence
         if((now - tally.started) > 3000 && tally.length > 20) {
           var avg_x = 0, avg_y = 0, count_x = 0, count_y = 0;
+          // TODO: prune the tally and try again if we're not converging
           for(var idx = 0; idx < tally.length; idx++) {
             var power = idx + 1;
             if(idx < (tally.length * 3)) { power = power / 3; }
@@ -61,14 +92,15 @@ document.addEventListener('deviceready', function() {
       }
     };
 
+    var gaze_history = [];
+    var gaze_threshold = 15;
+    window.gaze_history = gaze_history;
     var handle_event = function(res) {
       jq = jq || window.Ember && window.Ember.$;
       camera_locations = camera_locations || {};
       var elem = document.getElementById('linger');
-      // TODO: collect multiple events and average them
-      // for smoothing
+      var orientation = window.capabilities.orientation();
       if(res.action == 'gaze' || res.action == 'head_point') {
-        var orientation = window.capabilities.orientation();
         var xpx = res.gaze_x*(window.ppix || 96) / window.devicePixelRatio;
         var ypx = res.gaze_y*(window.ppiy || 96) / window.devicePixelRatio;
         if(capabilities.system == 'Android' && res.action == 'head_point') {
@@ -121,6 +153,39 @@ document.addEventListener('deviceready', function() {
             ypx = y_max - 10;
           }
         }
+        gaze_history.push({x: xpx, y: ypx});
+        if(gaze_history.length > 2) {
+          // Keep a short history of events to smooth motion
+          // TODO: - If you can trace a line w/ minimal jitter, try to keep on that line
+          var avg_x = 0;
+          var avg_y = 0;
+          var new_history = [];
+          gaze_history.forEach(function(coord, idx) {
+            if(coord.used || idx > gaze_history.length - 3) {
+              new_history.push(coord);
+              avg_x = avg_x + coord.x;
+              avg_y = avg_y + coord.y;
+            }
+          });
+          avg_x = avg_x / gaze_history.length;
+          avg_y = avg_y / gaze_history.length;
+          var diff_x = Math.abs(gaze_history.x - avg_x);
+          var diff_y = Math.abs(gaze_history.y - avg_y);
+          // - If very little movement, use the oldest in history
+          if(diff_x < gaze_threshold || diff_y < gaze_threshold) {
+            if(diff_x < gaze_threshold) {
+              xpx = new_history[0].x + (Math.random() - 0.5);
+            }
+            if(diff_y < gaze_threshold) {
+              ypx = new_history[0].y + (Math.random() - 0.5);
+            }
+            new_history[0].used = true;
+            gaze_history = new_history;
+          } else {
+            gaze_history = new_history.filter(function(c) { return !c.used; });
+          }
+        }
+
         res.xpx = xpx;
         res.ypx = ypx;
         if(delivery_debounce) {
@@ -152,8 +217,8 @@ document.addEventListener('deviceready', function() {
               ypx = Math.min(Math.max(ypx, 0), screen.height);
             }
           }
-          div.style.left = (xpx - 5) + "px";
-          div.style.top = (ypx - 5) + "px";
+          // div.style.left = (xpx - 5) + "px";
+          // div.style.top = (ypx - 5) + "px";
           var e = jq.Event('gazelinger');
           e.clientX = xpx;
           e.clientY = ypx;
@@ -162,14 +227,16 @@ document.addEventListener('deviceready', function() {
 
           var elem_left = elem && elem.style && elem.style.left;
           if (elem) { elem.style.left = '-1000px'; }
-          e.target = document.elementFromPoint(xpx, ypx);
-          if(res.action == 'head_point') {
-            e.target = e.target || document.body;
+          if(isFinite(xpx) && isFinite(ypx)) {
+            e.target = document.elementFromPoint(xpx, ypx);
+            if(res.action == 'head_point') {
+              e.target = e.target || document.body;
+            }
+            if (elem) { elem.style.left = elem_left; }
+            e.duration = duration;
+            e.ts = (new Date()).getTime();
+            jq(e.target).trigger(e);
           }
-          if (elem) { elem.style.left = elem_left; }
-          e.duration = duration;
-          e.ts = (new Date()).getTime();
-          jq(e.target).trigger(e);
         }
       } else if(res.action == 'head') {
         if(delivery_debounce) {
@@ -179,6 +246,15 @@ document.addEventListener('deviceready', function() {
             delivery_debounce = null;
           }, 50);
           var e = jq.Event('headtilt');
+          if(capabilities.system == 'Android') {
+            if(!camera_locations[orientation.layout]) {
+              mini_calibrate('tilt');
+              return;
+            } else {
+              center.style.display = 'none';
+            }
+          }
+  
           console.log("HEADTILT", res);
           e.vertical = res.head_tilt_y;
           e.horizontal = res.head_tilt_x;

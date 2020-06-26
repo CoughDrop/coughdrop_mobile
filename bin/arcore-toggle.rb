@@ -1,5 +1,5 @@
 if ARGV[0] == 'enable'
-  puts `cordova plugin add https://github.com/CoughDrop/cordova_face`
+  puts `cordova plugin add https://github.com/open-aac/cordova_face`
   `cp plugins/com.mycoughdrop.coughdrop.CoughDropFace/src/android/MainActivity.java platforms/android/app/src/main/java/com/mycoughdrop/coughdrop/MainActivity.java`
 elsif ARGV[0] == 'disable'
   puts `cordova plugin remove com.mycoughdrop.coughdrop.CoughDropFace`

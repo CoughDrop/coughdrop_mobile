@@ -40,7 +40,6 @@ header {
   border: 2px solid #fff;
   box-shadow: 0px 0px 20px #000;
 }
-
 #mobile_center_check {
   display: none;
   position: fixed; 
@@ -75,6 +74,16 @@ header {
   box-shadow: 0px 0px 20px #000;
   animation: throb 1.5s ease-in-out infinite;
   transition: background-color 1s ease, width 1s ease, height 1s ease, left 1s ease, top 1s ease;
+}
+#mobile_center_check.pending::after {
+  filter: grayscale(100%);
+}
+#mobile_center_check.level_1::after {
+  background: rgba(255, 0, 0, 0.5);
+  width: 46px;
+  height: 46px;
+  left: calc(50vw - 23px);
+  top: calc(50vh - 23px);
 }
 #mobile_center_check.level_1::after {
   background: rgba(255, 0, 0, 0.6);

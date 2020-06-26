@@ -22,28 +22,42 @@ document.addEventListener('deviceready', function() {
     var mini_calibrate = function(xpx, ypx) {
       var orientation = window.capabilities.orientation();
       var now = (new Date()).getTime();
-      if(camera_locations.for != orientation.layout) {
-        camera_locations.for = orientation.layout;
+      if(camera_locations.working_on != orientation.layout) {
+        camera_locations.working_on = orientation.layout;
         center.style.display = 'block';
-        // Give up trying to calibrate after 30 seconds
+        // Give up trying to calibrate after 15 seconds
         setTimeout(function() {
-          if(camera_locations.for == orientation.layout) {
+          if(camera_locations.working_on == orientation.layout) {
             center.style.display = 'none';
             camera_locations = {};
+            camera_locations[orientation.layout].x = 0.01;
+            camera_locations[orientation.layout].y = 0.01;
+            camera_locations.working_on = null;
           }
-        }, 30000);
+        }, 15000);
       }
+      var center_class = ' ';
+      if(xpx == null) {
+        inner.innerText = "Finding Face...";
+        center_class = ' pending';
+      } else {
+        inner.innerText = "Look Here";
+      }
+
       camera_locations["tally" + orientation.layout] = camera_locations["tally" + orientation.layout] || [];
+      console.log("CALIB", orientation.layout, camera_locations["tally" + orientation.layout].length);
       var size = camera_locations["tally" + orientation.layout].length;
       var started = camera_locations["tally" + orientation.layout].started || 0;
       if(size > 15 && (now - started) > 2250) {
-        center.setAttribute('class', 'level_3');
+        center.setAttribute('class', 'level_3' + center_class);
       } else if(size > 10 && (now - started) > 1500) {
-        center.setAttribute('class', 'level_2');
+        center.setAttribute('class', 'level_2' + center_class);
       } else if(size > 5 && (now - started) > 750) {
-        center.setAttribute('class', 'level_1');
+        center.setAttribute('class', 'level_1' + center_class);
+      } else if(xpx != null) {
+        center.setAttribute('class', 'level_0' + center_class);
       } else {
-        center.setAttribute('class', '');
+        center.setAttribute('class', '' + center_class);
       }
       if(xpx == 'tilt') {
         var tally = camera_locations["tally" + orientation.layout];
@@ -57,7 +71,7 @@ document.addEventListener('deviceready', function() {
             y: 0
           };
           camera_locations["tally" + orientation.layout] = [];
-          camera_locations.for = null;
+          camera_locations.working_on = null;
           window.locs = camera_locations;
           cordova.exec(function(res) { }, function(err) { 
           }, 'CoughDropFace', 'set_face', []);
@@ -90,7 +104,7 @@ document.addEventListener('deviceready', function() {
             y: avg_y - (window.innerHeight / 2)
           };
           camera_locations["tally" + orientation.layout] = [];
-          camera_locations.for = null;
+          camera_locations.working_on = null;
           window.locs = camera_locations;
         }
       }
@@ -105,9 +119,11 @@ document.addEventListener('deviceready', function() {
       var elem = document.getElementById('linger');
       var orientation = window.capabilities.orientation();
       if(res.action == 'gaze' || res.action == 'head_point') {
+        // TODO: user preference should allow amplifying distance
+        // from center for more subtle/extreme head movements
         var xpx = res.gaze_x*(window.ppix || 96) / window.devicePixelRatio;
         var ypx = res.gaze_y*(window.ppiy || 96) / window.devicePixelRatio;
-        if(res.action == 'head_point') {
+        if(res.action == 'head_point' || res.action == 'gaze') {
           if(!camera_locations[orientation.layout]) {
             mini_calibrate(xpx, ypx);
             return;
@@ -145,7 +161,7 @@ document.addEventListener('deviceready', function() {
         if(res.action == 'gaze') {
           var x_max = window.innerWidth;
           var y_max = window.innerHeight;
-          var fudge = 300;
+          var fudge = Math.min(x_max, y_max);
           if(xpx < 10 && xpx >= (0 - fudge)) {
             xpx = 10;
           } else if(xpx > (x_max - 10) && xpx <= (x_max + fudge)) {
@@ -250,6 +266,15 @@ document.addEventListener('deviceready', function() {
           delivery_debounce = setTimeout(function() {
             delivery_debounce = null;
           }, 50);
+          var now = Math.round((new Date()).getTime() / 1000 / 5);
+          window.tilt_ts = window.tilt_ts || now;
+          if(window.tilt_ts == now) {
+            window.tilt_ts_count = (window.tilt_ts_count || 0) + 1;
+          } else {
+            console.log("EVENTS FOR", window.tilt_ts, window.tilt_ts_count);
+            window.tilt_ts = now;
+            window.tilt_ts_count = 0;
+          }
           var e = jq.Event('headtilt');
           if(true) {
             if(!camera_locations[orientation.layout]) {
@@ -260,7 +285,7 @@ document.addEventListener('deviceready', function() {
             }
           }
   
-          console.log("HEADTILT", res);
+          // console.log("HEADTILT", res);
           e.vertical = res.head_tilt_y;
           e.horizontal = res.head_tilt_x;
           if(dropped_heads.length > 0) {
@@ -297,10 +322,12 @@ document.addEventListener('deviceready', function() {
     // listen should be idempotent
     window.capabilities.eye_gaze = window.capabilities.eye_gaze || {};
     window.capabilities.eye_gaze.listen = function() {
-      camera_locations = {};
       if(!gaze.listening) {
+        camera_locations = {};
         var layout = (capabilities.orientation() || {}).layout || "none";
+        console.log("LAYOUT TRACKED AS", layout);
         gaze.listening = true;
+        mini_calibrate();
         cordova.exec(function(res) { 
           handle_event(res);
         }, function(err) { 
@@ -331,10 +358,11 @@ document.addEventListener('deviceready', function() {
     window.capabilities.head_tracking = window.capabilities.head_tracking || {};
     // listen should be idempotent
     window.capabilities.head_tracking.listen = function(options) {
-      camera_locations = {};
       options = options || {};
       if(!gaze.listening) {
+        camera_locations = {};
         var layout = (capabilities.orientation() || {}).layout || "none";
+        console.log("LAYOUT TRACKED AS", layout);
         gaze.listening = true;
         var head_pointing = !!options.head_pointing;
         if(true) {

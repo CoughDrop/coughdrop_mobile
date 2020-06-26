@@ -65,7 +65,7 @@
         "com.coughdrop.cordova.backgroundaudio": "git+https://github.com/whitmer/cordova-plugin-backgroundaudio.git",
         "com.coughdrop.cordova.extra-tts": "git+https://github.com/coughdrop/extra-tts.git",
         "com.mycoughdrop.coughdrop.extra-tts": "https://github.com/coughdrop/extra-tts.git",
-        "com.mycoughdrop.coughdrop.face": "git+https://github.com/CoughDrop/cordova_face.git",
+        "com.mycoughdrop.coughdrop.face": "git+https://github.com/open-aac/cordova_face.git",
         "com.mycoughdrop.coughdrop.misc": "git+https://github.com/CoughDrop/coughdrop_cordova_misc.git",
         "cordova-android": "^8.1.0",
         "cordova-clipboard": "^1.3.0",

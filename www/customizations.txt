@@ -103,6 +103,14 @@ comment out this.removeSplashScreen();
 copy .jar for acapela to platforms/android/app/libs
 copy folders with .so files for acapela to platforms/android/app/src/main/jniLibs
 
+build.gradle
+    // build was hanging on app:lintVitalRelease
+    lintOptions {
+      abortOnError false;
+      checkReleaseBuilds false;
+    }
+
+
 AndroidManifest.xml
     <uses-feature android:name="android.hardware.nfc" android:required="false" />
     <uses-feature android:name="android.hardware.camera" android:required="false" />

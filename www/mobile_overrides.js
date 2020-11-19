@@ -1,4 +1,7 @@
 document.addEventListener('deviceready', function() {
+  if(window.cordova && window.cordova.InAppBrowser && window.cordova.InAppBrowser.open) {
+    window.open = cordova.InAppBrowser.open;
+  }
   if (window.capabilities) {
     jq = window.Ember && window.Ember.$;
     var div = document.createElement('div'); 

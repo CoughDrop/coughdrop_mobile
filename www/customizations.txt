@@ -8,6 +8,12 @@ WKWEBVIEW SEE https://cordova.apache.org/howto/2020/03/18/wkwebviewonly.html
 in platforms/ios/CoughDrop/Plugins/cordova-labs-local-webserver/CDVLocalWebServer.m
 - set cacheAge:0 to cacheAge:86400 for all instances except under addAppFileSystemHandler
 
+
+in CanvasCamera.js comment out this line: // this.image.crossOrigin = 'Anonymous';
+
+
+https://github.com/apache/cordova-plugin-media-capture/pull/185/files
+
 add frameworks/libraries:
 - AssetsLibrary.framework
 - AudioToolbox.framework
@@ -24,6 +30,16 @@ get acap files re-added
 CDVTTS.m:
 - (void)speak:(CDVInvokedUrlCommand*)command {
     ...
+    NSString* target = [options objectForKey:@"target"];
+    if (@available(iOS 13.0, *)) {
+        // iOS 13 feature that allows sending TTS content through the active call
+        if ([target isEqualToString:@"call"]) {
+            synthesizer.mixToTelephonyUplink = true;
+        } else {
+            synthesizer.mixToTelephonyUplink = false;
+        }
+    }    
+
     AVSpeechUtterance* utterance = [[AVSpeechUtterance new] initWithString:text];
     if(ident != nil) {
         utterance.voice = [AVSpeechSynthesisVoice voiceWithIdentifier:ident];

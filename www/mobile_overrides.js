@@ -363,8 +363,8 @@ document.addEventListener('deviceready', function() {
     }
     var gaze = {};
     // listen should be idempotent
-    window.capabilities.eye_gaze = window.capabilities.eye_gaze || {};
-    window.capabilities.eye_gaze.listen = function(listen_level) {
+    window.capabilities.native_eye_gaze = window.capabilities.native_eye_gaze || {native: true};
+    window.capabilities.native_eye_gaze.listen = function(listen_level) {
       if(!gaze.listening) {
         camera_locations = {};
         var layout = (capabilities.orientation() || {}).layout || "none";
@@ -378,7 +378,7 @@ document.addEventListener('deviceready', function() {
         }, 'MobileFace', 'listen', [{tilt_factor: 1.0, gaze: true, eyes: true, head: false, layout: layout}]);
       } else { return true; }
     };
-    window.capabilities.eye_gaze.stop_listening = function() {
+    window.capabilities.native_eye_gaze.stop_listening = function() {
       if(gaze.listening) {
         div.style.left = "-1000px";
         gaze.listening = false;
@@ -389,18 +389,18 @@ document.addEventListener('deviceready', function() {
         }, 'MobileFace', 'stop_listening', []);
       }
     };
-    window.capabilities.eye_gaze.calibrate = function() {
+    window.capabilities.native_eye_gaze.calibrate = function() {
       // TODO: we can run a js-based calibration tool if we like
       // trigger calibration
     };
-    window.capabilities.eye_gaze.calibratable = function(cb) {
+    window.capabilities.native_eye_gaze.calibratable = function(cb) {
       cb(false);
     }
-    window.capabilities.eye_gaze.available = false;
+    window.capabilities.native_eye_gaze.available = false;
 
-    window.capabilities.head_tracking = window.capabilities.head_tracking || {};
+    window.capabilities.native_head_tracking = window.capabilities.native_head_tracking || {native: true};
     // listen should be idempotent
-    window.capabilities.head_tracking.listen = function(options) {
+    window.capabilities.native_head_tracking.listen = function(options) {
       options = options || {};
       options.tilt = options.tilt || 1.0;
       if(!gaze.listening) {
@@ -420,7 +420,7 @@ document.addEventListener('deviceready', function() {
         }, 'MobileFace', 'listen', [head_pointing ? {tilt_factor: window.tilt_override || options.tilt, gaze: true, eyes: false, head: false, layout: layout} : {tilt_factor: window.tilt_override || options.tilt, gaze: false, eyes: false, head: true, layout: layout}]);
       } else { return true; }
     };
-    window.capabilities.head_tracking.stop_listening = function() {
+    window.capabilities.native_head_tracking.stop_listening = function() {
       if(gaze.listening) {
         div.style.left = "-1000px";
         gaze.listening = false;
@@ -431,20 +431,21 @@ document.addEventListener('deviceready', function() {
         }, 'MobileFace', 'stop_listening', []);
       }
     };
-    window.capabilities.head_tracking.calibrate = function() {
+    window.capabilities.native_head_tracking.calibrate = function() {
       // TODO: we can run a js-based calibration tool if we like
       // trigger calibration
     };
-    window.capabilities.head_tracking.calibratable = function(cb) {
+    window.capabilities.native_head_tracking.calibratable = function(cb) {
       cb(false);
     }
-    window.capabilities.head_tracking.available = false;
+    window.capabilities.native_head_tracking.available = false;
 
     cordova.exec(function(res) { 
       if(res && res.supported) {
         console.log("Face Tracking/TrueDepth is supported!");
         if(res.eyes !== false) {
-          window.capabilities.eye_gaze.available = true;
+          window.capabilities.native_eye_gaze.available = true;
+          window.capabilities.eye_gaze = window.capabilities.native_eye_gaze;
         }
         if(res.ppi) {
           window.ppix = res.ppi;
@@ -453,7 +454,8 @@ document.addEventListener('deviceready', function() {
         if(res.default_orientation && res.default_orientation != "unknown") {
           capabilities.default_orientation = res.default_orientation;
         }
-        window.capabilities.head_tracking.available = true;
+        window.capabilities.native_head_tracking.available = true;
+        window.capabilities.head_tracking = window.capabilities.native_head_tracking;
       }
     }, function(err) { 
       console.error('b', err); 

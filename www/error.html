@@ -1,0 +1,44 @@
+<html>
+  <body>
+    <div style='width: 300px; height: 200px; position: absolute; top: calc(50% - 100px); left: calc(50% - 150px); border: 2px solid #902e2e; background: #e86060; color: #fff; font-family: Arial; text-align: center; border-radius: 5px;'>
+      <div style='padding: 15px 10px;'>
+        <div style='font-weight: 200; font-size: 25px; margin-bottom: 15px; font-family: "Helvetica Neue", Helvetica, Arial;'>Error Loading CoughDrop</div>
+        There was an unexpected error loading the app. Please check the content restrictions on your device to ensure CoughDrop has proper access. 
+        <br/><br/><a href="https://coughdrop.zendesk.com/hc/en-us/articles/360058254672-How-can-I-get-past" target="_system" style='color: #eee;'>See here for more details.</a>
+      </div>
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script>
+      var alerted = false;
+      var fallback_alert = function() {
+        if(!alerted) {
+          alert("App failed to load, please check content restrictions");
+        }
+        alerted = true;
+      };
+      document.addEventListener("deviceready", function()  {
+        if(navigator.splashscreen) {
+          navigator.splashscreen.hide();
+          alerted = true;
+        } else {
+          fallback_alert();
+        }
+      }, false);
+      document.querySelector('a').addEventListener('click', function() {
+        if(window.cordova && window.cordova.InAppBrowser) {
+          cordova.InAppBrowser.open("https://coughdrop.zendesk.com/hc/en-us/articles/360058254672-How-can-I-get-past", "_system")
+        } else {
+          window.open("https://coughdrop.zendesk.com/hc/en-us/articles/360058254672-How-can-I-get-past", "_system");
+        }
+      })
+      setTimeout(function() {
+        fallback_alert();
+      }, 5000);
+      setInterval(function() {
+        if(navigator.splashscreen) {
+          navigator.splashscreen.hide();
+        }
+      }, 500)
+    </script>
+  </body>
+</html>

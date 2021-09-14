@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" id="com.mycoughdrop.coughdrop" version="2021.05.26">
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" id="com.mycoughdrop.coughdrop" version="2021.09.02">
     <name>CoughDrop</name>
     <description>A simple, modern communication app for struggling communicators.</description>
     <author>CoughDrop, Inc.</author>
@@ -19,7 +19,6 @@
         <preference name="BackupWebStorage" value="none"/>
         <preference name="KeyboardDisplayRequiresUserAction" value="false"/>
         <preference name="orientation" value="all"/>
-        <!-- TODO: WKURLSchemeHandler and drop iOS 10: https://cordova.apache.org/announcements/2020/06/01/cordova-ios-release-6.0.0.html -->
         <preference name="MediaPlaybackRequiresUserAction" value="false"/>
         <preference name="mediaTypesRequiringUserActionForPlayback" value="none"/>
         <preference name="WKWebViewOnly" value="true"/>
@@ -120,7 +119,6 @@
     <plugin name="cordova-plugin-brightness" spec="~0.1.5"/>
     <plugin name="cordova-plugin-chrome-apps-power" spec="~1.0.4"/>
     <plugin name="cordova-plugin-compat" spec="^1.1.0"/>
-    <plugin name="cordova-plugin-device" spec="~1.1.2"/>
     <plugin name="cordova-plugin-network-information" spec="^1.3.3"/>
     <plugin name="cordova-plugin-shared-preferences" spec="0.0.1"/>
     <plugin name="cordova-plugin-tts" spec="git+https://github.com/vilic/cordova-plugin-tts.git"/>

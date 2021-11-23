@@ -14,7 +14,6 @@
             "cordova-plugin-brightness": {},
             "cordova-plugin-chrome-apps-power": {},
             "cordova-plugin-compat": {},
-            "cordova-plugin-device": {},
             "cordova-plugin-xhr-blob-polyfill": {},
             "de.codevise.cordova.volume": {},
             "nl.x-services.plugins.backgroundaudio": {},
@@ -58,10 +57,14 @@
             "com.virtuoworks.cordova-plugin-canvascamera": {
                 "CAMERA_USAGE_DESCRIPTION": "Display video preview"
             },
-            "org.openaac.cordova_face": {},
             "cordova-plugin-printer": {
                 "ANDROID_SUPPORT_V4_VERSION": "28.+"
-            }
+            },
+            "cordova-plugin-device": {},
+            "cordova-launch-review": {
+                "ANDROID_PLAY_SERVICES_CORE_VERSION": "1.8.0"
+            },
+            "org.openaac.cordova_face": {}
         }
     },
     "dependencies": {
@@ -86,7 +89,6 @@
         "cordova-plugin-brightness": "^0.1.5",
         "cordova-plugin-chrome-apps-power": "^1.0.4",
         "cordova-plugin-compat": "^1.2.0",
-        "cordova-plugin-device": "^1.1.7",
         "cordova-plugin-file": "^6.0.2",
         "cordova-plugin-geolocation": "git+https://github.com/apache/cordova-plugin-geolocation.git",
         "cordova-plugin-inappbrowser": "^4.0.0",
@@ -119,6 +121,8 @@
     },
     "devDependencies": {
         "com.virtuoworks.cordova-plugin-canvascamera": "github:VirtuoWorks/CanvasCameraPlugin",
+        "cordova-launch-review": "^4.0.1",
+        "cordova-plugin-device": "^2.0.3",
         "cordova-plugin-printer": "^0.8.0",
         "org.openaac.cordova_face": "github:open-aac/cordova_face"
     }

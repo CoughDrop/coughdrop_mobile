@@ -93,7 +93,11 @@
       window._trackJs && window._trackJs.track("splash screen wasn't hidden");
     }
   }, 30000);
+<<<<<<< HEAD
   window.app_version = "2021.11.23d";
+=======
+  window.app_version = "2021.09.01";
+>>>>>>> c01581234c96cdde7cd6d5d8ea43f4fe1641c9f6
   window.capabilities = {installed_app: true, api_host: "https://app.mycoughdrop.com", wait_for_deviceready: true};
   navigator.standalone = navigator.standalone || (navigator.userAgent.match(/android/i) && navigator.userAgent.match(/chrome/i) && (screen.height-document.documentElement.clientHeight<40));
   var elem = document.getElementById('enabled_frontend_features');

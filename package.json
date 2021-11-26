@@ -124,6 +124,6 @@
         "cordova-launch-review": "^4.0.1",
         "cordova-plugin-device": "^2.0.3",
         "cordova-plugin-printer": "^0.8.0",
-        "org.openaac.cordova_face": "github:open-aac/cordova_face"
+        "org.openaac.cordova_face": "git+https://github.com/open-aac/cordova_face.git"
     }
 }

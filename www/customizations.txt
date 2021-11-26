@@ -126,6 +126,22 @@ build.gradle
       checkReleaseBuilds false;
     }
 
+(this will go away when you update to cordova-android 10)
+./platforms/android/CordovaLib/src/org/apache/cordova/engine/SystemWebViewEngine.java
+private void initWebViewSettings() {
+        ...
+
+        settings.setSavePassword(false); // (after this, paste)
+
+        if (preferences.getBoolean("AndroidInsecureFileModeEnabled", false)) {
+            //These settings are deprecated and loading content via file:// URLs is generally discouraged,
+            //but we allow this for compatibility reasons
+            LOG.d(TAG, "Enabled insecure file access");
+            settings.setAllowFileAccess(true);
+            settings.setAllowUniversalAccessFromFileURLs(true);
+        }
+
+
 
 AndroidManifest.xml
     <uses-feature android:name="android.hardware.nfc" android:required="false" />

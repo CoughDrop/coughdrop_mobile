@@ -36,7 +36,7 @@
 
     // TODO: figure out a way to test for WKWebView, or remove this when you finally switch
   var isWKWebView = false ;
-  if( navigator.platform.substr(0,2) === 'iP' ) {    // iOS detected
+  if( navigator.platform.substr(0,2) === 'iP' || navigator.platform.substr(0,3) === 'Mac' ) {    // iOS detected
       if( window.webkit && window.webkit.messageHandlers ) {
           isWKWebView = true ;
       }

@@ -148,6 +148,10 @@ document.addEventListener('deviceready', function() {
       if(res.action == 'gaze' || res.action == 'head_point') {
         var xpx = res.gaze_x*(window.ppix || 96) / window.devicePixelRatio;
         var ypx = res.gaze_y*(window.ppiy || 96) / window.devicePixelRatio;
+        if(res.calibrated) {
+          xpx = res.gaze_x;
+          ypx = res.gaze_y;
+        }
         var screen_width = screen.width;
         var screen_height = screen.height;
         // TODO: Check in simulator! Is this true on iPhone or is it reversed? 
@@ -173,10 +177,10 @@ document.addEventListener('deviceready', function() {
           }
         }
         if(res.action == 'head_point' || res.action == 'gaze') {
-          if(!camera_locations[orientation.layout]) {
+          if(!camera_locations[orientation.layout] && !res.calibrated) {
             mini_calibrate(xpx, ypx);
             return;
-          } else {
+          } else if(!res.calibrated) {
             center.style.display = 'none';
             xpx = xpx - camera_locations[orientation.layout].x;
             ypx = ypx - camera_locations[orientation.layout].y;
@@ -186,7 +190,7 @@ document.addEventListener('deviceready', function() {
         // Origin (x=0, y=0 should be the currrent location of the camera)
         // For x: looking left of the camera = negative, looking right = positive
         // For y: looking above the camera = positive, looking down = negative
-        if(!camera_locations[orientation.layout]) {
+        if(!camera_locations[orientation.layout] && !res.calibrated) {
           if(orientation.layout == 'landscape-primary') {
             xpx = xpx;
             ypx = (screen_height / 2) - ypx;  
@@ -364,18 +368,50 @@ document.addEventListener('deviceready', function() {
     var gaze = {};
     // listen should be idempotent
     window.capabilities.native_eye_gaze = window.capabilities.native_eye_gaze || {native: true};
-    window.capabilities.native_eye_gaze.listen = function(listen_level) {
+    window.capabilities.native_eye_gaze.listen = function(opts) {
+      opts = opts || {};
       if(!gaze.listening) {
         camera_locations = {};
         var layout = (capabilities.orientation() || {}).layout || "none";
         console.log("LAYOUT TRACKED AS", layout);
         gaze.listening = true;
-        mini_calibrate();
-        cordova.exec(function(res) { 
-          handle_event(res);
-        }, function(err) { 
-          console.error('gaze_error', err); 
-        }, 'MobileFace', 'listen', [{tilt_factor: 1.0, gaze: true, eyes: true, head: false, layout: layout}]);
+        gaze.external_listen = !!opts.external_accessory;
+        if(gaze.external_listen) {
+          cordova.exec(function(res) {
+            gaze.external_type = 'hiru';
+            cordova.exec(function(res) {
+              if(res.action == 'hiru_gaze') {
+                handle_event({
+                  action: 'gaze', 
+                  eyes: true, 
+                  eyegaze_hardware: 'irisbond', 
+                  source: 'hiru', 
+                  calibrated: true, 
+                  gaze_x: res.gaze_x, 
+                  gaze_y: res.gaze_y
+                });
+              }
+            }, function(err) {
+              if(window.modal) {
+                window.modal.error("Eye tracker failed to register", true);
+              }
+            }, 'MobileFace', 'hiru_listen', [])
+          }, function(err) {
+            console.error('gaze_error', err); 
+            gaze.listening = false;
+            if(window.modal) {
+              window.modal.error("Eye tracker failed to initialize", true);
+            }
+        }, 'MobileFace', 'hiru_start', []);
+        } else {
+          mini_calibrate();
+          cordova.exec(function(res) { 
+            handle_event(res);
+          }, function(err) { 
+            console.error('gaze_error', err); 
+          }, 'MobileFace', 'listen', [{tilt_factor: 1.0, gaze: true, eyes: true, head: false, layout: layout}]);
+        }
+
       } else { return true; }
     };
     window.capabilities.native_eye_gaze.stop_listening = function() {
@@ -383,15 +419,27 @@ document.addEventListener('deviceready', function() {
         div.style.left = "-1000px";
         gaze.listening = false;
         cordova.exec(function(res) { 
-          console.log("stop res", res);
         }, function(err) { 
-          console.error('b', err); 
+          console.error('gaze', err); 
         }, 'MobileFace', 'stop_listening', []);
+
+        if(gaze.external_listen) {
+          cordova.exec(function(res) { 
+          }, function(err) { 
+            console.error('hiru error', err); 
+          }, 'MobileFace', 'hiru_stop', []);  
+        }
       }
     };
     window.capabilities.native_eye_gaze.calibrate = function() {
       // TODO: we can run a js-based calibration tool if we like
       // trigger calibration
+      // TODO: Support Hiru calibration
+      if(gaze.external_listen) {
+        'hiru_calibrate'
+      } else {
+
+      }
     };
     window.capabilities.native_eye_gaze.calibratable = function(cb) {
       cb(false);
@@ -460,12 +508,29 @@ document.addEventListener('deviceready', function() {
     }, function(err) { 
       console.error('b', err); 
     }, 'MobileFace', 'status', []);
-
-  }
-  if(window.navigator.splashscreen) {
-    window.navigator.splashscreen.show();
+    document.addEventListener("pause", function() {
+      // Native iOS trackers need to be paused when going to bg;
+      if(gaze && gaze.listening && gaze.external_listen) {
+        gaze.resume_on_return = true;
+        window.capabilities.native_eye_gaze.stop_listening();        
+      }
+    }, false);
+    document.addEventListener("resume", function() {
+      // Native iOS trackers need to be resumes when returning from bg;
+      if(gaze && gaze.listening && gaze.external_listen && gaze.resume_on_return) {
+        window.capabilities.native_eye_gaze.listen({external_accessory: true});
+      }
+      delete gaze.resume_on_return;  
+    }, false);
+    if(window.navigator.splashscreen && !window.splash_hidden) {
+      window.navigator.splashscreen.show();
+      // TODO: is this still not being cleared correctly on ipados?
+    }  
   }
 });
+
+// TODO:
+
 
 // ANDROID face mesh tracking
 // https://github.com/ManuelTS/augmentedFaceMeshIndices

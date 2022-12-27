@@ -10,7 +10,7 @@
   window.scrollTo(document.body.scrollLeft, document.body.scrollTop);
   
   
-  if(window.navigator.splashscreen) {
+  if(window.navigator.splashscreen && !window.splash_hidden) {
     window.navigator.splashscreen.show();
   }
   

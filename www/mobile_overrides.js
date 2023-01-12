@@ -290,7 +290,7 @@ document.addEventListener('deviceready', function() {
           var e = jq.Event('gazelinger');
           e.clientX = xpx;
           e.clientY = ypx;
-          e.eyegaze_hardware = 'system';
+          e.eyegaze_hardware = res.eyegaze_hardware || 'system';
           e.pointer = !res.eyes;
 
           var elem_left = elem && elem.style && elem.style.left;
@@ -398,9 +398,23 @@ document.addEventListener('deviceready', function() {
             }, 'MobileFace', 'hiru_listen', [])
           }, function(err) {
             console.error('gaze_error', err); 
+            var msg = "Eye tracker failed to initialize";
+            if(err == 'not connected') {
+              msg = "Eye tracker not detected, please reconnect and re-enter Speak Mode";
+            } else if(err == 'no license') {
+              msg = "Eye tracker not registered, please contact support";
+            } else if(err == 'bad license') {
+              msg = "Eye tracker not authorized, please contact support";
+            } else if(err == 'inactive license') {
+              msg = "Eye tracker authorization expired, please contact support";
+            } else if(err == 'too old') {
+              msg = "This device isn't properly configured, please upgrade and try again";
+            } else if(err = 'not available') {
+              msg = "The application isn't properly configured for third-party eye tracking, please contact support";
+            }
             gaze.listening = false;
             if(window.modal) {
-              window.modal.error("Eye tracker failed to initialize", true);
+              window.modal.error(m, true);
             }
         }, 'MobileFace', 'hiru_start', []);
         } else {
@@ -490,10 +504,14 @@ document.addEventListener('deviceready', function() {
 
     cordova.exec(function(res) { 
       if(res && res.supported) {
+        // TODO: I think so far Hiru requires the same hardware as TrueDepth, but that couple change
         console.log("Face Tracking/TrueDepth is supported!");
         if(res.eyes !== false) {
           window.capabilities.native_eye_gaze.available = true;
           window.capabilities.eye_gaze = window.capabilities.native_eye_gaze;
+          if(res.hardware_possible) {
+            window.capabilities.native_eye_gaze.hardware_possible = true;
+          }
         }
         if(res.ppi) {
           window.ppix = res.ppi;

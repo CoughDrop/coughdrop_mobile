@@ -56,7 +56,7 @@
 <script type="text/javascript" src='weblinger/weblinger.js' async='true'></script>
 <script>
   document.addEventListener('deviceready', function() {
-    if(window.navigator.splashscreen) {
+    if(window.navigator.splashscreen && !window.splash_hidden) {
       window.navigator.splashscreen.show();
     }
   });

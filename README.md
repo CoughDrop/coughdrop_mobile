@@ -35,5 +35,4 @@ Additional notes:
 - There are some additional notes in `www/customizations.txt`
 
 ## License
-
-TBD, probably MIT. Message me if you need this and we can discuss.
+MIT

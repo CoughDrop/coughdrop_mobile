@@ -22,9 +22,9 @@ cordova prepare
 Additional notes:
 
 - Plugins are listed in `config.xml`
-- There may be some issues getting the `acap` (text-to-speech) dependencies configured. I
-  need to update this with notes on how to do that, but it's not required for the app
-  to function so you could probably remove it.
+- If using Acapela TTS, you'll want to check the instructions in the `extra-tts` repo
+  for how to use your commercial license, otherwise you may get unexpected crashes
+  when testing or installing.
 - In the main app, look in `lib/tasks/extras.rake` for helpers getting compiled code into this app
 - `cordova run android` to compile and run on a plugged-in android device
 - `cordova prepare` to prep for loading in XCode
@@ -35,5 +35,4 @@ Additional notes:
 - There are some additional notes in `www/customizations.txt`
 
 ## License
-
-TBD, probably MIT. Message me if you need this and we can discuss.
+MIT

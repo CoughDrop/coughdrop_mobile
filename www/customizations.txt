@@ -58,52 +58,6 @@ CDVTTS.m:
     }
 
 
-// APPEARS TO NOT BE NECESSARY
-// ios/CoughDrop/CoughDrop-info.plist
-// add
-// 	<key>NSAppTransportSecurity</key>
-// 	<dict>
-// 		<key>NSAllowsArbitraryLoads</key>
-// 		<true/>
-// 	</dict>
-// to support TLS for Amazon
-
-in ios/CoughDrop/Classes/MainViewController.m:
-
-// SHOULD NOT NEED THIS ANYMORE with keyboard plugin
-// http://stackoverflow.com/questions/32743649/hide-shortcut-keyboard-bar-for-uiwebview-in-ios-9
-// #import <objc/runtime.h>
-// 
-// - (void) hideKeyboardShortcutBar: (UIView *)view
-// {
-//     for (UIView *sub in view.subviews) {
-//         [self hideKeyboardShortcutBar:sub];
-//         if ([NSStringFromClass([sub class]) isEqualToString:@"UIWebBrowserView"]) {
-//             
-//             Method method = class_getInstanceMethod(sub.class, @selector(inputAccessoryView));
-//             IMP newImp = imp_implementationWithBlock(^(id _s) {
-//                 if ([sub respondsToSelector:@selector(inputAssistantItem)]) {
-//                     UITextInputAssistantItem *inputAssistantItem = [sub inputAssistantItem];
-//                     inputAssistantItem.leadingBarButtonGroups = @[];
-//                     inputAssistantItem.trailingBarButtonGroups = @[];
-//                 }
-//                 return nil;
-//             });
-//             method_setImplementation(method, newImp);
-//             
-//         }
-//     }
-// }
-// 
-// - (void)viewDidLoad
-// {
-//     [super viewDidLoad];
-//     // Do any additional setup after loading the view from its nib.
-//     
-//     [self hideKeyboardShortcutBar:self.webView];
-// }
-
-
 === ANDROID CUSTOMIZATIONS ===
 copy splash screen images from www/assets/splash
 to platforms/android/res

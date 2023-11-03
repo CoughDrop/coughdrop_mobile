@@ -29,10 +29,21 @@ Additional notes:
 - `cordova run android` to compile and run on a plugged-in android device
 - `cordova prepare` to prep for loading in XCode
 - `bin/build_android` to create production-ready versions for submission to app stores. You'll need
-  a keys.p12 file and put your password in `android-release-keys.properties` first.
-- Managing splash screen images and app icons was a headache, I don't have notes on how
+  a keys.p12 file and put your password in `android-release-keys.properties` first. Google and 
+  Amazon have different requirements for minimum and
+  target SDK levels, so those will need to updated
+  over time in this file.
+- Managing splash screen images and app icons was a     
+  headache, I don't have notes on how
   to do it because it just works right now and I don't want to touch it.
+- After running bin/build_android, you'll need to manually
+  remove and re-add MobileFace.storyboard in the Plugins
+  group, or it will error at build time.
+- Until the cordova libraries are updated, you will
+  need to manually set the Minimu Deployments to 
+  11.0 insted of 9.0
 - There are some additional notes in `www/customizations.txt`
+
 
 ## License
 MIT

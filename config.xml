@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" id="com.mycoughdrop.coughdrop" version="2023.11.01">
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" id="com.mycoughdrop.coughdrop" version="2023.11.02">
     <name>CoughDrop</name>
     <description>A simple, modern communication app for struggling communicators.</description>
     <author>CoughDrop, Inc.</author>
@@ -55,6 +55,9 @@
         </feature>
         <config-file parent="NSMicrophoneUsageDescription" platform="ios" target="*-Info.plist">
             <string>CoughDrop would like access to your microphone.</string>
+        </config-file>
+        <config-file parent="NSLocationAlwaysAndWhenInUseUsageDescription" platform="ios" target="*-Info.plist">
+            <string>CoughDrop would like to access your location data. This is used, if you opt-in, to generate reports on AAC word choices based on different locations or settings.</string>
         </config-file>
         <config-file parent="NSCameraUsageDescription" platform="ios" target="*-Info.plist">
             <string>CoughDrop would like access to your camera for taking pictures or tracking head position.</string>
@@ -123,7 +126,7 @@
     <plugin name="cordova-plugin-compat" spec="^1.1.0"/>
     <plugin name="cordova-plugin-network-information" spec="^1.3.3"/>
     <plugin name="cordova-plugin-shared-preferences" spec="0.0.1"/>
-    <plugin name="cordova-plugin-tts" spec="git+https://github.com/vilic/cordova-plugin-tts.git"/>
+    <plugin name="cordova-plugin-tts" spec="git+https://github.com/CoughDrop/cordova-plugin-tts"/>
     <plugin name="cordova-plugin-xhr-blob-polyfill" spec="~1.0.3"/>
     <plugin name="de.codevise.cordova.volume" spec="https://github.com/whitmer/cordova-volume.git"/>
     <plugin name="nl.x-services.plugins.backgroundaudio" spec="https://github.com/whitmer/cordova-plugin-backgroundaudio.git"/>

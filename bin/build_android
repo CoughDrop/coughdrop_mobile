@@ -1,22 +1,22 @@
 #!/bin/sh
 cordova prepare
 ruby bin/arcore-toggle.rb enable
-# change config.xml to level=19
+# LOWER ANDROID VERSION - change config.xml to level=19
 xsltproc --stringparam min 19 --stringparam target 31 --stringparam max 20 -o config.xml bin/minsdk_version_change.xsl config.xml 
 cordova build android --release -- --gradleArg=-PcdvMinSdkVersion=19 --gradleArg=-PcdvVersionCodeForceAbiDigit=1  --minSdkVersion=19
 cp platforms/android/app/build/outputs/apk/release/app-release.apk builds/android-release-lower.apk
-# change config.xml to level=22
+# AMAZON KINDLE VERSION change config.xml to level=22
 ruby bin/arcore-toggle.rb disable
 xsltproc --stringparam min 22 --stringparam target 30 --stringparam max '' -o config.xml bin/minsdk_version_change.xsl config.xml 
 cordova build android --release -- --gradleArg=-PcdvMinSdkVersion=22 --gradleArg=-PcdvVersionCodeForceAbiDigit=1 --minSdkVersion=22
 cp platforms/android/app/build/outputs/apk/release/app-release.apk builds/android-release-kindle.apk
 # --gradleArg=-PcdvBuildMultipleApks=false
-# change config.xml to level=23
+# STANDARD VERSION change config.xml to level=23
 ruby bin/arcore-toggle.rb enable
-xsltproc --stringparam min 23 --stringparam target 31 --stringparam max '' -o config.xml bin/minsdk_version_change.xsl config.xml
+xsltproc --stringparam min 23 --stringparam target 33 --stringparam max '' -o config.xml bin/minsdk_version_change.xsl config.xml
 cordova build android --release -- --gradleArg=-PcdvMinSdkVersion=23 --gradleArg=-PcdvVersionCodeForceAbiDigit=1 --gradleArg=-PcdvBuildMultipleApks=false
 cp platforms/android/app/build/outputs/apk/release/app-release.apk builds/android-release.apk
-# build an .aab file (try to match previous min as close as we're allowed)
-xsltproc --stringparam min 19 --stringparam target 31 --stringparam max '' -o config.xml bin/minsdk_version_change.xsl config.xml 
+# GOOGLE PLAY VERSINO build an .aab file (try to match previous min as close as we're allowed)
+xsltproc --stringparam min 19 --stringparam target 33 --stringparam max '' -o config.xml bin/minsdk_version_change.xsl config.xml 
 cordova build android --release -- --packageType=bundle --gradleArg=-PcdvMinSdkVersion=19 --gradleArg=-PcdvVersionCodeForceAbiDigit=1 --minSdkVersion=19
 cp platforms/android/app/build/outputs/bundle/release/app.aab builds/android-release.aab

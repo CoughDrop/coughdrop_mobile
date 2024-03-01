@@ -44,6 +44,24 @@ Additional notes:
   11.0 insted of 9.0
 - There are some additional notes in `www/customizations.txt`
 
+## Testing 
+Mobile apps, in theory, should run the same as the web version. It is important to test your functionality first on the web, where it is easier to iterate and re-release. If there is an issue on mobile, it's easier to isolate, as it will most likely be found in the mobile source code.
+
+Some areas, especially on iOS, are more fragile than others. When you first build an app package from a new device or new Cordova build, you will want to test the following features to ensure they are working correctly, as misconfigured libraries are possible any time you set things up on a new computer.
+
+- Splash screen shows correctly on initial load
+- Login works correctly
+- Sync works correctly
+- After sync, close the app, turn off wifi and load the app, symbols should still load correctly
+- In user Preferences under voice, Premium Voices should show download link
+- Premium Voices should download correctly when clicked
+- Premium Voices should output speech correctly when selected in Preferences
+- Editing a board, taking pictures from device camera to save on a button should work correctly
+- Editing a board, recording audio from the microphone to save on a button should work correctly
+- A button that links to a YouTube video should correctly play the video when selected in Speak Mode
+- In Speak Mode, device should not go to sleep after OS-defined timeout
+- Eye Gaze/Head Tracking should correctly use the OS libraries, not the JavaScript library (the JavaScript version will auto-run a calibration that says "Initializing..." if you hit Test Tracking from the user Preferences page, the OS libraries will not)
+- In-App Purchases are only configured to work on iOS, but they can be tested from the user Billing page
 
 ## License
 MIT
